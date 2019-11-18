@@ -36,5 +36,3 @@ If you get stuck, refer to the `solutions` directory for a working solution to t
 ### Challenge 08: [Setup Terraform Enterprise](challenges/08-setupterraformenterprise/README.md)
 
 ### Challenge 09: [Private Module Registry](challenges/09-privatemoduleregistry/README.md)
-
-### Challenge 10: [Sentinel Policy](challenges/10-value/README.md)
