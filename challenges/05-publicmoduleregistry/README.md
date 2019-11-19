@@ -44,9 +44,6 @@ module "network" {
 
 Run a `terraform init` and `terraform plan` to verify that all the resources look correct.
 
-<details><summary>View Output</summary>
-<p>
-
 ```sh
 An execution plan has been generated and is shown below.
 Resource actions are indicated with the following symbols:
@@ -82,9 +79,6 @@ Terraform will perform the following actions:
 
 Plan: 3 to add, 0 to change, 0 to destroy.
 ```
-
-</p>
-</details>
 
 Run `terraform apply` to create the infrastructure.
 
