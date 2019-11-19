@@ -44,7 +44,7 @@ These are the challenges for the workshop, it is important to note that they hav
 
 * [Challenge 00 - Getting Started](challenges/00-gettingstarted)
 * [Challenge 01 - Connecting to Azure](challenges/01-connectingtoazure)
-* [Challenge 02 - Connecting to Azure](challenges/02-azurevm)
+* [Challenge 02 - Azure VM](challenges/02-azurevm)
 * [Challenge 03 - Connecting to Azure](challenges/03-terraformcount)
 * [Challenge 04 - Connecting to Azure](challenges/04-terraformmodules)
 * [Challenge 05 - Connecting to Azure](challenges/05-publicmoduleregistry)

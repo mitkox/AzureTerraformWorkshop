@@ -1,4 +1,4 @@
-# 03 - Azure Virtual Machine
+# Challenge 02 - Azure Virtual Machine
 
 ## Expected Outcome
 
@@ -31,7 +31,7 @@ provider "azurerm" {
 }
 
 terraform {
-  required_version = "= 0.11.7"
+  required_version = "= 0.12.12"
 }
 ```
 
@@ -51,7 +51,8 @@ variable "location" {
 
 ### Create a Resource Group
 
-Now create a Resource Group to contain all of our infrastructure using the variables to interpolate the parameters:
+Now create a Resource Group to contain all of our infrastructure using the variables to interpolate the parameters. A variable is a user or machine-supplied input in Terraform configurations. Variables can be supplied via environment variables, CLI flags, or variable files. Combined with modules, variables help make Terraform flexible, sharable, and extensible. Variable must be defined before used, to do so: 
+
 
 ```hcl
 resource "azurerm_resource_group" "main" {
@@ -89,9 +90,6 @@ resource "azurerm_subnet" "main" {
 Run `terraform init` since this is the first time we are running Terraform from this directory.
 
 Run `terraform plan` where you should see the plan of two new resources, namely the Resource Group and the Virtual Network.
-
-<details><summary>View Output</summary>
-<p>
 
 ```sh
 $ terraform plan
@@ -141,9 +139,6 @@ Note: You didn't specify an "-out" parameter to save this plan, so Terraform
 can't guarantee that exactly these actions will be performed if
 "terraform apply" is subsequently run.
 ```
-
-</p>
-</details>
 
 If your plan looks good, go ahead and run `terraform apply` and type "yes" to confirm you want to apply.
 When it completes you should see:
@@ -278,10 +273,9 @@ Run `terraform apply` to apply the changes.
 ### Outputs
 
 You now have all the infrastructure in place and can now Remote Desktop into the Windows Server VM we just stood up.
-
 But wait, the Public IP was dynamically created, how do I access it?
 
-You could check the value in the Azure Portal, however let's instead add an output to get that information.
+You could check the value in the Azure Portal, however let's instead add an output to get that information. An output is a configurable piece of information that is highlighted at the end of a Terraform run
 
 Add the following output:
 
@@ -379,3 +373,8 @@ Do you really want to destroy?
 - [Azure Network Interface](https://www.terraform.io/docs/providers/azurerm/r/network_interface.html)
 - [Azure Virtual Machine](https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html)
 - [Public IP Address](https://www.terraform.io/docs/providers/azurerm/r/public_ip.html)
+
+What's next?
+==============
+
+Once this section is completed, go back to [the agenda](../../README.md).
