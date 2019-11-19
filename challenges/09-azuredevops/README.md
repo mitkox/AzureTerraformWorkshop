@@ -84,7 +84,7 @@ Select the link indicated in the screenshot below to access the advanced setting
 
 Enter the required information using the service principal information you created earlier.
 
--**Connection name**: azurecloud
+- **Connection name**: azurecloud
 - **Environment**: AzureCloud
 - **Subscription ID**: `id` from `az account show` output
 - **Subscription Name**: `name` from `az account show` output
@@ -106,8 +106,8 @@ To do that, choose "Repos" then use the repository dropdown to create a new repo
 
  ![Repository dropdown](media/b4-image53.png)
 
-    - Enter "terraform" as the repository name.
-    - Once the project is created select "Generate Git credentials".
+- Enter "terraform" as the repository name.
+- Once the project is created select "Generate Git credentials".
 
     ![Generate Git Credentials](media/b4-image50.png)
 
@@ -172,9 +172,9 @@ Select `Empty Job`
 ![A screenshot of Azure DevOps Pipeline](media/emptyjob.PNG)
 
 Click on `Agent Job 01` and provide the following details: 
-    - Display Name: Terraform 
-    - Agent Pool: Azure Pipelines
-    - Agent Specification: ubuntu-18.04
+- **Display Name** Terraform 
+- **Agent Pool:** Azure Pipelines
+- **Agent Specification:** ubuntu-18.04
 
 Click on the `+`sign next to the Agent Job 
 
@@ -185,31 +185,31 @@ Now we are going to start adding tasks to the pipeline. First, we need to run in
 ![A screenshot of Azure DevOps Pipeline](media/terraformcli.PNG)
 
 Now that this is done let's configure the task, select the one you just added and provide the information as follows: 
-    - Display Name: Terraform Init
-    - Command: init
-    - Configuration Directory: $(System.DefaultWorkingDirectory)
-    - Backend Type: azurerm
+- **Display Name:** Terraform Init
+- **Command:** init
+- **Configuration Directory:** $(System.DefaultWorkingDirectory)
+- **Backend Type:** azurerm
 
 Expand the AzureRM Backend Configuration and provide the configuration of the storage account you created in challenge07. Add a new empty container on the storage account and use that one to avoid conflicts with previously created files: 
-    - Backend Azure Subscription: select the one you have been using
-    - Resource Group Name: the one use for the storage account in challenge 07
-    - Resource Group Location: the one use for the storage account in challenge 07
-    - Storage Account Name: the one use for the storage account in challenge 07
-    - Storage Account SKU: Standard_LRS
-    - Container Name: the new container you created
-    - Key: tf
+- **Backend Azure Subscription:** select the one you have been using
+- **Resource Group Name:** the one use for the storage account in challenge 07
+- **Resource Group Location:** the one use for the storage account in challenge 07
+- **Storage Account Name:** the one use for the storage account in challenge 07
+- **Storage Account SKU:** Standard_LRS
+- **Container Name:** the new container you created
+- **Key:** tf
 
 Add another task the same way you did before, and use the same `Terraform CLI` use the one by Chales Zipp. Select the task you just added and provide the information as follows: 
-    - Display Name: Terraform Plan
-    - Command: plan
-    - Configuration Directory: $(System.DefaultWorkingDirectory)
-    - Environment Subscription: select the one you have been working on
+- **Display Name:** Terraform Plan
+- **Command:** plan
+- **Configuration Directory:** $(System.DefaultWorkingDirectory)
+- **Environment Subscription:** select the one you have been working on
 
 Once again, add another task the same way you did before, and use the same `Terraform CLI` use the one by Chales Zipp. Select the task you just added and provide the information as follows: 
-    - Display Name: Terraform Apply
-    - Command: apply
-    - Configuration Directory: $(System.DefaultWorkingDirectory)
-    - Environment Subscription: select the one you have been working on
+- **Display Name:** Terraform Apply
+- **Command:** apply
+- **Configuration Directory:** $(System.DefaultWorkingDirectory)
+- **Environment Subscription:** select the one you have been working on
 
 Click on `Save and Queue`
 
