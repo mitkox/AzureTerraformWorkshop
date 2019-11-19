@@ -174,3 +174,7 @@ Review in the Azure Portal nothing must have been created so far since we have n
 
 Now that we have the deployment planned we need to apply it for that we will use a release pipeline. 
 
+What's next?
+==============
+
+Once this section is completed, go back to [the agenda](../../README.md).
