@@ -137,10 +137,9 @@ When running a plan you may run into the following error:
 
 To get past this, simply run the `az login` command and follow the prompts.
 
-> Note: Take a minute to analyse why you needed to run another `terraform init` command before you could run a plan.
+> **Note:** Take a minute to analyse why you needed to run another `terraform init` command before you could run a plan.
 
-<details><summary>View Output</summary>
-<p>
+
 
 ```sh
 An execution plan has been generated and is shown below.
@@ -274,9 +273,6 @@ Terraform will perform the following actions:
 Plan: 7 to add, 0 to change, 0 to destroy.
 ```
 
-</p>
-</details>
-
 Before applying, take a look at all the resources that are going to be created from our simple `module` block.
 
 Run `terraform apply` to create the infrastructure.
@@ -288,7 +284,7 @@ Run `terraform destroy` to remove everything we created.
 ## Advanced areas to explore
 
 1. Add a public ip to the Windows Compute instance using additional parameters built into the Compute module.
-1. Create a second module instance of Compute to stand up a Linux Virtual Machine.
+2. Create a second module instance of Compute to stand up a Linux Virtual Machine.
 
 ## Resources
 
