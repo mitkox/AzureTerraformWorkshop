@@ -159,17 +159,17 @@ Now use the commands copied from Azure DevOps to configure the remote repository
 
 Next create the build Pipeline. Go to `Azure Pipelines`, select `Build` and click on `+New` and select `New Build Pipeline`
 
-![A screenshot of Azure DevOps Pipeline](media/create-pipeline.png)
+![A screenshot of Azure DevOps Pipeline](media/create-pipeline.PNG)
 
 Select `Use Classic Editor`
 
-![A screenshot of Azure DevOps Pipeline](media/classiceditor.png)
+![A screenshot of Azure DevOps Pipeline](media/classiceditor.PNG)
 
 Select `Azure Repos` as your source and provide the details of the repo you just created. 
 
 Select `Empty Job`
 
-![A screenshot of Azure DevOps Pipeline](media/emptyjob.png)
+![A screenshot of Azure DevOps Pipeline](media/emptyjob.PNG)
 
 Click on `Agent Job 01` and provide the following details: 
     - Display Name: Terraform 
@@ -178,11 +178,11 @@ Click on `Agent Job 01` and provide the following details:
 
 Click on the `+`sign next to the Agent Job 
 
-![A screenshot of Azure DevOps Pipeline](media/addtask.png)
+![A screenshot of Azure DevOps Pipeline](media/addtask.PNG)
 
 Now we are going to start adding tasks to the pipeline. First, we need to run init, on the search box look for `Terraform` and select the `Terraform CLI` use the one by Chales Zipp and click on `Add`
 
-![A screenshot of Azure DevOps Pipeline](media/terraformcli.png)
+![A screenshot of Azure DevOps Pipeline](media/terraformcli.PNG)
 
 Now that this is done let's configure the task, select the one you just added and provide the information as follows: 
     - Display Name: Terraform Init
