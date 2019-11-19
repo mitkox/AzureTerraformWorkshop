@@ -32,7 +32,7 @@ Save the file an exit. This will create a simple Resource Group and allow you to
 Verify format: 
 
 ```
-cat main.tf
+$ cat main.tf
 resource "azurerm_resource_group" "test" {
 name     = "challenge01-rg"
 location = "westeurope"
@@ -42,14 +42,14 @@ location = "westeurope"
 Format the file: 
 
 ```
-terraform fmt
+$ terraform fmt
 main.tf
 ```
 
 Check the new format: 
 
 ```
-cat main.tf
+$ cat main.tf
 resource "azurerm_resource_group" "test" {
   name     = "challenge01-rg"
   location = "westeurope"
