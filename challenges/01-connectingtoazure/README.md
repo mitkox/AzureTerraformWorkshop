@@ -40,6 +40,9 @@ name     = "challenge01-rg"
 location = "westeurope"
 }
 ```
+</p>
+</details>
+
 Format the file: 
 
 `terraform fmt`
@@ -47,6 +50,9 @@ Format the file:
 <p>
 ```main.tf
 ``
+</p>
+</details>
+
 Check the new format: 
 
 `cat main.tf`
@@ -58,6 +64,9 @@ resource "azurerm_resource_group" "test" {
   location = "westeurope"
 }
 ```
+</p>
+</details>
+
 
 ### Run the Terraform Workflow
 
@@ -271,6 +280,9 @@ After importing an existing resource, what operation(s) would the terraform plan
 ```
 Destroy: state exists as it was imported but there is no configuration file for it in Terraform
 ```
+</p>
+</details>
+
 The following challenge will showcase the process to import resources into Terraform. 
 
 ### Create Infrastructure in the Portal
