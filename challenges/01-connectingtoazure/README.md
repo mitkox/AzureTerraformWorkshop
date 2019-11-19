@@ -7,6 +7,7 @@ In this challenge, you will use Terraform from the Azure Cloud Shell to create s
 In this challenge, you will:
 
 - Initialize Terraform
+- Use `fmt` to format your templates
 - Run a `plan` on simple a simple resource
 - Run an `apply` to create Azure infrastructure
 - Run a `destroy` to remove Azure infrastructure
@@ -17,16 +18,46 @@ In this challenge, you will:
 
 From the Cloud Shell, change directory into a folder specific to this challenge. If you created the scaffolding in Challenge 00, then then you can use the command `cd ~/AzureWorkChallenges/challenge01/`.
 
-Create a file named `main.tf` and add a single Resource Group resource.
+Create a file named `main.tf` and add a single Resource Group resource. You can use the command **code** to open a text editor on cloudshell.
 
 ```hcl
 resource "azurerm_resource_group" "test" {
-  name     = "challenge01-rg"
-  location = "eastus"
+name     = "challenge01-rg"
+location = "westeurope"
 }
 ```
 
-This will create a simple Resource Group and allow you to walk through the Terraform Workflow.
+Save the file an exit. This will create a simple Resource Group and allow you to walk through the Terraform Workflow however you can see the format is not properly set as you would on a JSON file, you could edit it your self or run the command **terraform fmt**.
+
+Verify format: 
+
+`cat main.tf`
+<details><summary>View Output</summary>
+<p>
+```sh
+resource "azurerm_resource_group" "test" {
+name     = "challenge01-rg"
+location = "westeurope"
+}
+```
+Format the file: 
+
+`terraform fmt`
+<details><summary>View Output</summary>
+<p>
+```main.tf
+``
+Check the new format: 
+
+`cat main.tf`
+<details><summary>View Output</summary>
+<p>
+```sh
+resource "azurerm_resource_group" "test" {
+  name     = "challenge01-rg"
+  location = "westeurope"
+}
+```
 
 ### Run the Terraform Workflow
 
@@ -37,7 +68,21 @@ This will create a simple Resource Group and allow you to walk through the Terra
 ```sh
 $ terraform init
 
+Initializing the backend...
+
 Initializing provider plugins...
+- Checking for available provider plugins...
+- Downloading plugin for provider "azurerm" (hashicorp/azurerm) 1.36.1...
+
+The following providers do not have any version constraints in configuration,
+so the latest version was installed.
+
+To prevent automatic upgrades to new major versions that may contain breaking
+changes, it is recommended to add version = "..." constraints to the
+corresponding provider blocks in configuration, with the constraint strings
+suggested below.
+
+* provider.azurerm: version = "~> 1.36"
 
 Terraform has been successfully initialized!
 
@@ -74,12 +119,13 @@ Resource actions are indicated with the following symbols:
 
 Terraform will perform the following actions:
 
-  + azurerm_resource_group.main
-      id:       <computed>
-      location: "eastus"
-      name:     "challenge01-rg"
-      tags.%:   <computed>
-
+  # azurerm_resource_group.test will be created
+  + resource "azurerm_resource_group" "test" {
+      + id       = (known after apply)
+      + location = "westeurope"
+      + name     = "challenge01-rg"
+      + tags     = (known after apply)
+    }
 
 Plan: 1 to add, 0 to change, 0 to destroy.
 
@@ -93,26 +139,27 @@ can't guarantee that exactly these actions will be performed if
 </p>
 </details>
 
+Now we can actually deploy the resources by running the command below, you will need to confirm by typing "yes".
+
 ---
 `terraform apply`
 <details><summary>View Output</summary>
 <p>
 
 ```sh
-$ terraform apply
-
 An execution plan has been generated and is shown below.
 Resource actions are indicated with the following symbols:
   + create
 
 Terraform will perform the following actions:
 
-  + azurerm_resource_group.main
-      id:       <computed>
-      location: "eastus"
-      name:     "challenge01-rg"
-      tags.%:   <computed>
-
+  # azurerm_resource_group.test will be created
+  + resource "azurerm_resource_group" "test" {
+      + id       = (known after apply)
+      + location = "westeurope"
+      + name     = "challenge01-rg"
+      + tags     = (known after apply)
+    }
 
 Plan: 1 to add, 0 to change, 0 to destroy.
 
@@ -122,13 +169,8 @@ Do you want to perform these actions?
 
   Enter a value: yes
 
-azurerm_resource_group.main: Creating...
-  location: "" => "eastus"
-  name:     "" => "challenge01-rg"
-  tags.%:   "" => "<computed>"
-azurerm_resource_group.main: Creation complete after 1s (ID: /subscriptions/.../resourceGroups/challenge01-rg)
-
-Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+azurerm_resource_group.test: Creating...
+azurerm_resource_group.test: Creation complete after 0s [id=/subscriptions/xxxx-xxxx-xxxxx/resourceGroups/challenge01-rg]
 ```
 </p>
 </details>
@@ -151,7 +193,7 @@ Now add a new Resource Group resource that scales with a `count` parameter.
 ```hcl
 resource "azurerm_resource_group" "count" {
   name     = "challenge01-rg-${count.index}"
-  location = "eastus"
+  location = "westeurope"
   count    = 2
 }
 ```
@@ -215,9 +257,25 @@ Destroy complete! Resources: 3 destroyed.
 
 ## How To - Part 2 (Import Resources)
 
+By defualt, Terraform only manages previously created resources using Terraform, and therefore they are described in onw of the templates. You can also, importe resources, meaning handle services that were created outside of Terraform for example using the portal. 
+
+However, the import functionality of Terraform only writes the state file and lets Terraform know about the existance of those resources, however it will not create the Terraform configuration files. 
+
+**Critical Thinking**
+
+After importing an existing resource, what operation(s) would the terraform plan show?
+
+`Answer`
+<details><summary>View Answer</summary>
+<p>
+```
+Destroy: state exists as it was imported but there is no configuration file for it in Terraform
+```
+The following challenge will showcase the process to import resources into Terraform. 
+
 ### Create Infrastructure in the Portal
 
-Navigate to the Azure Portal and click on the "Resource groups" item on the left side and then click  "+ Add":
+First, we need to create some resources outside of Terraform in order to later on import them. For that navigate to the Azure Portal and click on the "Resource groups" item on the left side and then click  "+ Add":
 
 ![](../../img/2018-05-28-13-58-49.png)
 
@@ -251,6 +309,8 @@ At this point we have a Resource Group and a Storage Account and are ready to im
 ![](../../img/2018-05-28-14-09-39.png)
 
 ### Create Terraform Configuration
+
+Now that we have created the resources using the portal, we also need to create its Terraform configuration file, otherwise it will be deleted since it is not described there. 
 
 Your Azure Cloud Shell should still be in the folder for this challenge with a single `main.tf` file.
 Delete the contents of that file so we can start from scratch.
@@ -324,7 +384,7 @@ Terraform will perform the following actions:
 Plan: 2 to add, 0 to change, 0 to destroy.
 ```
 
-> CAUTION: This is not what we want!
+> **CAUTION:** This is not what we want! You already have those resources created so we need to import them to let Terraform know.
 
 ### Import the Resource Group
 
@@ -423,3 +483,8 @@ Run a `terraform destroy` and follow the prompts to remove the infrastructure.
 ## Resources
 
 - [Terraform Count](https://www.terraform.io/docs/configuration/interpolation.html#count-information)
+
+What's next?
+==============
+
+Once this section is completed, go back to [the agenda](../README.md).
