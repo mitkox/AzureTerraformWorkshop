@@ -31,17 +31,13 @@ Save the file an exit. This will create a simple Resource Group and allow you to
 
 Verify format: 
 
-`cat main.tf`
-<details><summary>View Output</summary>
-<p>
-```sh
+```
+cat main.tf
 resource "azurerm_resource_group" "test" {
 name     = "challenge01-rg"
 location = "westeurope"
 }
 ```
-</p>
-</details>
 
 Format the file: 
 
