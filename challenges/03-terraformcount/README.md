@@ -355,3 +355,8 @@ Run `terraform destroy` to remove everything we created.
 
 - [Azure Load Balancer](https://www.terraform.io/docs/providers/azurerm/r/loadbalancer.html)
 - [Resource Targeting](https://www.terraform.io/docs/commands/plan.html#resource-targeting)
+
+What's next?
+==============
+
+Once this section is completed, go back to [the agenda](../../README.md).
