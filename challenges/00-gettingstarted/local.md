@@ -1,8 +1,9 @@
-# Installing Challenge Requirements Locally
+Installing Challenge Requirements Locally
+=======
 
 This section is only needed if you wish to install all the tooling on your local machine.
 
-> NOTE: If you are using windows, it is advised that you use the git-bash terminal to execute the workshop commands.
+**Note:** If you are using windows, it is advised that you use the git-bash terminal to execute the workshop commands.
 
 ## How to
 
@@ -34,15 +35,6 @@ Legal docs and information: aka.ms/AzureCliLegal
 
 ### Login to Azure
 
-This workshop will require that you have access to an Azure Subscription with at least Contributor rights to create resources and the ability to generate a service principal for the subscription. If you do not currently have access you can create a trial account by going to [https://azure.microsoft.com/en-us/free](https://azure.microsoft.com/en-us/free) and registering for a 3-month trail.
-
-Signing up for a trial requires:
-
-- A unique Microsoft Live Account that has not registered for a trial for in the past
-- A Credit Card, used to verify identity and will not be charged unless you opt-in after the trial is over
-
-> If you are having issues with this access, please alert the instructor ASAP as this will prevent you from completing the challenges.
-
 Login with the Azure CLI by running `az login`.
 
 ```sh
@@ -60,6 +52,13 @@ EnvironmentName    IsDefault    Name                             State    Tenant
 -----------------  -----------  -------------------------------  -------  ------------------------------------
 AzureCloud         True         Visual Studio Premium with MSDN  Enabled  GUID
 ```
+If you see multiple susbscriptions, select the one you are going to use for the challenges by running the following command: 
+
+```
+$ az account set -s 59b082db-abf2-4a89-9703-xxxxxxxxxxx
+```
+
+At this point your Azure CLI is fully functional.
 
 You are now connecting to Azure from the Azure CLI!
 
@@ -67,13 +66,9 @@ As one last step here, login to the [Azure Portal](https://portal.azure.com/), t
 
 ### Download Terraform
 
-In this workshop we will be using terraform 0.11.7 for all of the challenges.
+In this workshop we will be using terraform 0.12.12 (the one included in Cloud Shell) for all of the challenges.
 
-Navigate to the downloads page [https://releases.hashicorp.com/terraform/0.11.7/](https://releases.hashicorp.com/terraform/0.11.7/) and select the `.zip` file for your operating system.
-
-For **Windows** - [Download Here](https://releases.hashicorp.com/terraform/0.11.7/terraform_0.11.7_windows_amd64.zip)
-
-For **Mac** - [Download Here](https://releases.hashicorp.com/terraform/0.11.7/terraform_0.11.7_darwin_amd64.zip)
+Navigate to the downloads page [https://releases.hashicorp.com/terraform/0.12.12/](https://releases.hashicorp.com/terraform/0.12.12/) and select the `.zip` file for your operating system.
 
 Once downloaded, extract the contents which is just a `terraform` binary and copy it to a folder inside your PATH environment variable.
 
@@ -87,14 +82,14 @@ Verify the installation by running `terraform -v`, you should see something like
 
 ```sh
 $ terraform -v
-Terraform v0.11.7
+Terraform v0.12.12
 ```
 
 The latest release can always be found on the [Terraform Website](https://www.terraform.io/downloads.html)
 
 ### Download Visual Studio Code
 
-*or any other text editor...*
+You can use Visual Studio Code to create your Terraform templates, there are extensions that can help with development. You can also use other editors of your choice. 
 
 You can Download the latest version here:
 
@@ -113,11 +108,11 @@ Then open the repository in VS Code.
 
 ```sh
 cd ~/Projects/
-git clone https://github.com/CardinalNow/TerraformWorkshop.git
-code TerraformWorkshop
+git clone https://github.com/Zenocolo/AzureTerraformWorkshop
+code AzureTerraformWorkshop
 ```
 
-> If running `code TerraformWorkshop` doesn't launch VS Code, open up VS Code manually and open the folder you cloned the repository to.
+> Open up VS Code manually and open the folder you cloned the repository to.
 
 ### Github Access
 
@@ -128,3 +123,8 @@ Github repositories will be needed to complete some of the later challenges.
 Sign up for a free github.com account by going to [https://github.com/join](https://github.com/join) and following the instructions.
 
 Once created, login.
+
+What's next?
+==============
+
+Once this section is completed, go back to [the agenda](README.md).

@@ -1,6 +1,6 @@
 About this Workshop
 ========
-This is a WorkShop for *Terraform on Azure*.
+This is a Workshop for *Terraform on Azure*.
 
 Infrastructure as Code allows the management of your infrastructure including networks, virtual machines, platform services, and load balancers. Using Terraform configuration to describe the desired Azure resources needed for an environment ensures that consistent infrastructure is created each time it is deployed.
 
@@ -47,7 +47,14 @@ These are the challenges for the workshop, it is important to note that they hav
 
 ### Challenges requirements
 
-* Azure Passes, Free-Trial Account or existing Azure subscriptions for attendees
+This workshop will require that you have access to an Azure Subscription with at least Contributor rights to create resources and the ability to generate a service principal for the subscription (you need permissions on you Azure AD tenant). If you do not currently have access you can create a trial account by going to [https://azure.microsoft.com/en-us/free](https://azure.microsoft.com/en-us/free) and registering for a 3-month trail.
+
+Signing up for a trial requires:
+
+- A unique Microsoft Live Account that has not registered for a trial for in the past. It is recommended that you do NOT use your corporate email.
+- A Credit Card, used to verify identity and will not be charged unless you opt-in after the trial is over
+
+> If you are having issues with this access, please alert the instructor ASAP as this will prevent you from completing the challenges.
 
 Credits
 =======

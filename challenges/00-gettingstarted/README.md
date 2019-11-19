@@ -1,8 +1,11 @@
-# 00 - Getting Started
+00 - Getting Started
+=======
 
 ## Expected Outcome
 
 In this challenge, you will connect to the [Azure Cloud Shell](https://azure.microsoft.com/en-us/features/cloud-shell/) that will be needed for future challenges.
+
+Cloud Shell is a free (excl. storage cost) service which provides you a virtual Linux server in a container, including pre-installed Azure CLI.
 
 In this challenge, you will:
 
@@ -11,21 +14,13 @@ In this challenge, you will:
 - Verify `terraform` installation
 - Create a folder structure to complete challenges
 
-> Note: If you would rather complete the challenges from you local worskstation, detailed instructions can be found [here](local.md).
+> **Note:** If you would rather complete the challenges from you local worskstation and install terraform, detailed instructions can be found [here](local.md).
+
 ## How to
 
 ### Login to the Azure Portal
 
 Navigate to [https://portal.azure.com](https://portal.azure.com) and login with your Azure Credentials.
-
-This workshop will require that you have access to an Azure Subscription with at least Contributor rights to create resources. If you do not currently have access you can create a trial account by going to [https://azure.microsoft.com/en-us/free](https://azure.microsoft.com/en-us/free) and registering for a 3-month trail.
-
-Signing up for a trial requires:
-
-- A unique Microsoft Live Account that has not registered for a trial for in the past
-- A Credit Card, used to verify identity and will not be charged unless you opt-in after the trial is over
-
-> If you are having issues with this access, please alert the instructor ASAP as this will prevent you from completing the challenges.
 
 ### Open the Cloud Shell
 
@@ -33,7 +28,7 @@ Located at the top of the page is the button open the Azure Cloud Shell inside t
 
 ![](../../img/2018-05-28-12-25-01.png)
 
-> Note: Another option is to use the full screen Azure Cloud Shell at [https://shell.azure.com/](https://shell.azure.com/).
+> **Note:** Another option is to use the full screen Azure Cloud Shell at [https://shell.azure.com/](https://shell.azure.com/).
 
 The first time you connect to the Azure Cloud Shell you will be prompted to setup an Azure File Share that you will persist the environment.
 
@@ -49,7 +44,7 @@ After a few seconds you should see that your storage account has been created:
 
 ![](../../img/2018-05-28-12-30-33.png)
 
-> Note: Behind the scenes this is creating a new Resource Group with the name `cloud-shell-storage-eastus` (or which ever region you defaulted to). If you need more information, it can be found [here](https://docs.microsoft.com/en-us/azure/cloud-shell/persisting-shell-storage).
+>** Note:** Behind the scenes this is creating a new Resource Group with the name `cloud-shell-storage-eastus` (or which ever region you defaulted to). If you need more information, it can be found [here](https://docs.microsoft.com/en-us/azure/cloud-shell/persisting-shell-storage).
 
 SUCCESS!
 You are now logged into the Azure Cloud Shell which uses your portal session to automatically authenticate you with the Azure CLI and Terraform.
@@ -65,61 +60,23 @@ In the Cloud Shell type the following commands and verify that the utilities are
 
 ```sh
 $ az -v
-azure-cli (2.0.33)
+azure-cli                         2.0.76
 
-acr (2.0.25)
-acs (2.0.33)
-advisor (0.5.1)
-ams (0.1.1)
-appservice (0.1.33)
-backup (1.1.1)
-batch (3.2.2)
-batchai (0.2.3)
-billing (0.1.8)
-cdn (0.0.14)
-cloud (2.0.13)
-cognitiveservices (0.1.13)
-command-modules-nspkg (2.0.1)
-configure (2.0.15)
-consumption (0.3.1)
-container (0.1.24)
-core (2.0.33)
-cosmosdb (0.1.21)
-dla (0.1.0)
-dls (0.0.21)
-dms (0.0.1)
-eventgrid (0.1.12)
-eventhubs (0.1.3)
-extension (0.0.14)
-feedback (2.1.1)
-find (0.2.9)
-interactive (0.3.21)
-iot (0.1.20)
-keyvault (2.0.22)
-lab (0.0.22)
-maps (0.1.0)
-monitor (0.1.7)
-network (2.1.2)
-nspkg (3.0.2)
-profile (2.0.25)
-rdbms (0.2.3)
-redis (0.2.13)
-reservations (0.1.2)
-resource (2.0.29)
-role (2.0.24)
-servicebus (0.1.2)
-servicefabric (0.0.12)
-sql (2.0.26)
-storage (2.0.33)
-vm (2.0.32)
+command-modules-nspkg              2.0.3
+core                              2.0.76
+nspkg                              3.0.4
+telemetry                          1.0.4
 
 Python location '/opt/az/bin/python3'
-Extensions directory '/home/tstraub/.azure/cliextensions'
+Extensions directory '/home/lanicola/.azure/cliextensions'
 
-Python (Linux) 3.6.1 (default, May 18 2018, 04:21:17)
+Python (Linux) 3.6.5 (default, Oct 30 2019, 06:32:16)
 [GCC 5.4.0 20160609]
 
 Legal docs and information: aka.ms/AzureCliLegal
+
+
+Your CLI is up-to-date.
 ```
 </p>
 </details>
@@ -131,7 +88,10 @@ Legal docs and information: aka.ms/AzureCliLegal
 
 ```sh
 $ terraform -v
-Terraform v0.11.7
+Terraform v0.12.12
+
+Your version of Terraform is out of date! The latest version
+is 0.12.16. You can update by downloading from www.terraform.io/downloads.html
 ```
 
 </p>
@@ -151,7 +111,7 @@ Another sub2                     AzureCloud   xxxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx
 Another sub3                     AzureCloud   xxxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx  Enabled  False
 ```
 
-If you have more than subscription, make sure that subscription is set as default using the subscription name:
+If you have more than subscription, make sure that subscription is set as default using the subscription name (use the one that matches your environment):
 
 ```sh
 az account set -s 'Visual Studio Premium with MSDN'
@@ -185,3 +145,7 @@ AzureWorkChallenges
 |- challenge06
 |- challenge07
 ```
+What's next?
+==============
+
+Once this section is completed, go back to [the agenda](README.md).
