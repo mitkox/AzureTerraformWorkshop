@@ -1,14 +1,14 @@
-# 05 - Terraform Modules
-
-## Expected Outcome
+# Challenge 04 - Terraform Modules
 
 In this challenge, you will create a module to contain a scalable virtual machine deployment, then create an environment where you will call the module.
+
+A module in Terraform is a container for multiple resources that are used together. Modules can be used to create lightweight abstractions, so that you can describe your infrastructure in terms of its architecture, rather than directly in terms of physical objects.
 
 ## How to
 
 ### Create Folder Structure
 
-From the Cloud Shell, change directory into a folder specific to this challenge. If you created the scaffolding in Challenge 00, then then you can use the command `cd ~/AzureWorkChallenges/challenge05/`.
+From the Cloud Shell, change directory into a folder specific to this challenge. If you created the scaffolding in Challenge 00, then then you can use the command `cd ~/AzureWorkChallenges/challenge04/`.
 
 In order to organize your code, create the following folder structure with `main.tf` files.
 
@@ -23,7 +23,7 @@ In order to organize your code, create the following folder structure with `main
 
 ### Create the Module
 
-Inside the `my_virtual_machine` module folder copy over the terraform configuration from challenge 04.
+Inside the `my_virtual_machine` module folder copy over the terraform configuration from challenge 03.
 
 ### Create Variables
 
@@ -37,8 +37,6 @@ variable "vm_size" {}
 variable "username" {}
 variable "password" {}
 ```
-
-> Extra credit: How many other variables can you extract?
 
 ### Create the Environment
 
@@ -182,3 +180,8 @@ Run `terraform plan` and verify that your plan succeeds and looks the same.
 - [Using Terraform Modules](https://www.terraform.io/docs/modules/usage.html)
 - [Source Terraform Modiules](https://www.terraform.io/docs/modules/sources.html)
 - [Public Module Registry](https://www.terraform.io/docs/registry/index.html)
+
+What's next?
+==============
+
+Once this section is completed, go back to [the agenda](../../README.md).

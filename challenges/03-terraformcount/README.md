@@ -1,4 +1,4 @@
-# Challenge 04 - Terraform Count
+# Challenge 03 - Terraform Count
 
 
 In this challenge, you will take what you did in Challenge 02 and expand to take a count variable.
@@ -6,15 +6,15 @@ In this challenge, you will take what you did in Challenge 02 and expand to take
 The count parameter on resources can simplify configurations and let you scale resources by simply incrementing a number.
 Additionally, variables can be used to expand a list of resources for use elsewhere.
 
-**Note:** Be aware that if you did not destroy the infrastructure from Challenge 04 you may run into resource naming conflicts (namely "Resource already exists").
+**Note:** Be aware that if you did not destroy the infrastructure from Challenge 03 you may run into resource naming conflicts (namely "Resource already exists").
 
 ## How to
 
 ### Update Configuration to reflect the count parameter
 
-From the Cloud Shell, change directory into a folder specific to this challenge. If you created the scaffolding in Challenge 00, then you can use the command `cd ~/AzureWorkChallenges/challenge04/`.
+From the Cloud Shell, change directory into a folder specific to this challenge. If you created the scaffolding in Challenge 00, then you can use the command `cd ~/AzureWorkChallenges/challenge03/`.
 
-Copy the main.tf file from challenge 03 into the current directory.
+Copy the main.tf file from challenge 02 into the current directory.
 
 Now that we have created a baseline we will update it to scale using the count parameter: 
 
@@ -22,7 +22,7 @@ Be sure to update the value of the `name` variable:
 
 ```hcl
 variable "name" {
-  default = "challenge04"
+  default = "challenge03"
 }
 ```
 
@@ -116,9 +116,9 @@ Now investigate this plan in more detail and you will notice that names have bee
 ...
   + azurerm_virtual_machine.module[0]
       ...
-      name:                                 "challenge04-vm0"
+      name:                                 "challenge03-vm0"
       ...
-      os_profile.3613624746.computer_name:  "challenge04vm0"
+      os_profile.3613624746.computer_name:  "challenge03vm0"
       ...
 
 ```
@@ -169,10 +169,10 @@ Terraform will perform the following actions:
       ip_configuration.0.subnet_id:                                       "${azurerm_subnet.main.id}"
       location:                                                           "eastus"
       mac_address:                                                        <computed>
-      name:                                                               "challenge04-nic0"
+      name:                                                               "challenge03-nic0"
       private_ip_address:                                                 <computed>
       private_ip_addresses.#:                                             <computed>
-      resource_group_name:                                                "challenge04-rg"
+      resource_group_name:                                                "challenge03-rg"
       tags.%:                                                             <computed>
       virtual_machine_id:                                                 <computed>
 
@@ -197,10 +197,10 @@ Terraform will perform the following actions:
       ip_configuration.0.subnet_id:                                       "${azurerm_subnet.main.id}"
       location:                                                           "eastus"
       mac_address:                                                        <computed>
-      name:                                                               "challenge04-nic1"
+      name:                                                               "challenge03-nic1"
       private_ip_address:                                                 <computed>
       private_ip_addresses.#:                                             <computed>
-      resource_group_name:                                                "challenge04-rg"
+      resource_group_name:                                                "challenge03-rg"
       tags.%:                                                             <computed>
       virtual_machine_id:                                                 <computed>
 
@@ -209,9 +209,9 @@ Terraform will perform the following actions:
       fqdn:                                                               <computed>
       ip_address:                                                         <computed>
       location:                                                           "eastus"
-      name:                                                               "challenge04-pubip0"
+      name:                                                               "challenge03-pubip0"
       public_ip_address_allocation:                                       "static"
-      resource_group_name:                                                "challenge04-rg"
+      resource_group_name:                                                "challenge03-rg"
       sku:                                                                "Basic"
       tags.%:                                                             <computed>
 
@@ -220,25 +220,25 @@ Terraform will perform the following actions:
       fqdn:                                                               <computed>
       ip_address:                                                         <computed>
       location:                                                           "eastus"
-      name:                                                               "challenge04-pubip1"
+      name:                                                               "challenge03-pubip1"
       public_ip_address_allocation:                                       "static"
-      resource_group_name:                                                "challenge04-rg"
+      resource_group_name:                                                "challenge03-rg"
       sku:                                                                "Basic"
       tags.%:                                                             <computed>
 
   + azurerm_resource_group.main
       id:                                                                 <computed>
       location:                                                           "eastus"
-      name:                                                               "challenge04-rg"
+      name:                                                               "challenge03-rg"
       tags.%:                                                             <computed>
 
   + azurerm_subnet.main
       id:                                                                 <computed>
       address_prefix:                                                     "10.0.1.0/24"
       ip_configurations.#:                                                <computed>
-      name:                                                               "challenge04-subnet"
-      resource_group_name:                                                "challenge04-rg"
-      virtual_network_name:                                               "challenge04-vnet"
+      name:                                                               "challenge03-subnet"
+      resource_group_name:                                                "challenge03-rg"
+      virtual_network_name:                                               "challenge03-vnet"
 
   + azurerm_virtual_machine.main[0]
       id:                                                                 <computed>
@@ -247,32 +247,32 @@ Terraform will perform the following actions:
       delete_os_disk_on_termination:                                      "false"
       identity.#:                                                         <computed>
       location:                                                           "eastus"
-      name:                                                               "challenge04-vm0"
+      name:                                                               "challenge03-vm0"
       network_interface_ids.#:                                            <computed>
       os_profile.#:                                                       "1"
       os_profile.1750279281.admin_password:                               <sensitive>
       os_profile.1750279281.admin_username:                               "testadmin"
-      os_profile.1750279281.computer_name:                                "challenge04vm0"
+      os_profile.1750279281.computer_name:                                "challenge03vm0"
       os_profile.1750279281.custom_data:                                  <computed>
       os_profile_windows_config.#:                                        "1"
       os_profile_windows_config.429474957.additional_unattend_config.#:   "0"
       os_profile_windows_config.429474957.enable_automatic_upgrades:      "false"
       os_profile_windows_config.429474957.provision_vm_agent:             "false"
       os_profile_windows_config.429474957.winrm.#:                        "0"
-      resource_group_name:                                                "challenge04-rg"
+      resource_group_name:                                                "challenge03-rg"
       storage_image_reference.#:                                          "1"
-      storage_image_reference.3904372904.id:                              ""
-      storage_image_reference.3904372904.offer:                           "WindowsServer"
-      storage_image_reference.3904372904.publisher:                       "MicrosoftWindowsServer"
-      storage_image_reference.3904372904.sku:                             "2016-Datacenter"
-      storage_image_reference.3904372904.version:                         "latest"
+      storage_image_reference.3903372903.id:                              ""
+      storage_image_reference.3903372903.offer:                           "WindowsServer"
+      storage_image_reference.3903372903.publisher:                       "MicrosoftWindowsServer"
+      storage_image_reference.3903372903.sku:                             "2016-Datacenter"
+      storage_image_reference.3903372903.version:                         "latest"
       storage_os_disk.#:                                                  "1"
       storage_os_disk.0.caching:                                          "ReadWrite"
       storage_os_disk.0.create_option:                                    "FromImage"
       storage_os_disk.0.disk_size_gb:                                     <computed>
       storage_os_disk.0.managed_disk_id:                                  <computed>
       storage_os_disk.0.managed_disk_type:                                "Standard_LRS"
-      storage_os_disk.0.name:                                             "challenge04vm0-osdisk"
+      storage_os_disk.0.name:                                             "challenge03vm0-osdisk"
       tags.%:                                                             <computed>
       vm_size:                                                            "Standard_A2_v2"
 
@@ -283,32 +283,32 @@ Terraform will perform the following actions:
       delete_os_disk_on_termination:                                      "false"
       identity.#:                                                         <computed>
       location:                                                           "eastus"
-      name:                                                               "challenge04-vm1"
+      name:                                                               "challenge03-vm1"
       network_interface_ids.#:                                            <computed>
       os_profile.#:                                                       "1"
       os_profile.1900549424.admin_password:                               <sensitive>
       os_profile.1900549424.admin_username:                               "testadmin"
-      os_profile.1900549424.computer_name:                                "challenge04vm1"
+      os_profile.1900549424.computer_name:                                "challenge03vm1"
       os_profile.1900549424.custom_data:                                  <computed>
       os_profile_windows_config.#:                                        "1"
       os_profile_windows_config.429474957.additional_unattend_config.#:   "0"
       os_profile_windows_config.429474957.enable_automatic_upgrades:      "false"
       os_profile_windows_config.429474957.provision_vm_agent:             "false"
       os_profile_windows_config.429474957.winrm.#:                        "0"
-      resource_group_name:                                                "challenge04-rg"
+      resource_group_name:                                                "challenge03-rg"
       storage_image_reference.#:                                          "1"
-      storage_image_reference.3904372904.id:                              ""
-      storage_image_reference.3904372904.offer:                           "WindowsServer"
-      storage_image_reference.3904372904.publisher:                       "MicrosoftWindowsServer"
-      storage_image_reference.3904372904.sku:                             "2016-Datacenter"
-      storage_image_reference.3904372904.version:                         "latest"
+      storage_image_reference.3903372903.id:                              ""
+      storage_image_reference.3903372903.offer:                           "WindowsServer"
+      storage_image_reference.3903372903.publisher:                       "MicrosoftWindowsServer"
+      storage_image_reference.3903372903.sku:                             "2016-Datacenter"
+      storage_image_reference.3903372903.version:                         "latest"
       storage_os_disk.#:                                                  "1"
       storage_os_disk.0.caching:                                          "ReadWrite"
       storage_os_disk.0.create_option:                                    "FromImage"
       storage_os_disk.0.disk_size_gb:                                     <computed>
       storage_os_disk.0.managed_disk_id:                                  <computed>
       storage_os_disk.0.managed_disk_type:                                "Standard_LRS"
-      storage_os_disk.0.name:                                             "challenge04vm1-osdisk"
+      storage_os_disk.0.name:                                             "challenge03vm1-osdisk"
       tags.%:                                                             <computed>
       vm_size:                                                            "Standard_A2_v2"
 
@@ -317,8 +317,8 @@ Terraform will perform the following actions:
       address_space.#:                                                    "1"
       address_space.0:                                                    "10.0.0.0/16"
       location:                                                           "eastus"
-      name:                                                               "challenge04-vnet"
-      resource_group_name:                                                "challenge04-rg"
+      name:                                                               "challenge03-vnet"
+      resource_group_name:                                                "challenge03-rg"
       subnet.#:                                                           <computed>
       tags.%:                                                             <computed>
 
@@ -336,7 +336,7 @@ Run `terraform apply` to create all the infrastructure.
 
 ### Azure Portal
 
-In the Azure Portal, view all the resources in the `challenge04-rg` Resource Group.
+In the Azure Portal, view all the resources in the `challenge03-rg` Resource Group.
 
 How important do think naming is?
 
