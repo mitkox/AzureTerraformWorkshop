@@ -48,9 +48,10 @@ These are the challenges for the workshop, it is important to note that they hav
 * [Challenge 03 - Terraform Count](challenges/03-terraformcount)
 * [Challenge 04 - Terraform Modules](challenges/04-terraformmodules)
 * [Challenge 05 - Public Module Registry](challenges/05-publicmoduleregistry)
-* [Challenge 06 - Remote Backend](challenges/06-remotebackend)
-* [Challenge 07 - Security](challenges/08-security)
-* [Challenge 08 - Azure DevOps](challenges/09-azuredevops)
+* [Challenge 06 - Private Module Registry](challenges/06-privatemoduleregistry)
+* [Challenge 07 - Remote Backend](challenges/07-remotebackend)
+* [Challenge 08 - Security](challenges/08-security)
+* [Challenge 09 - Azure DevOps](challenges/09-azuredevops)
 
 
 ### Challenges requirements
