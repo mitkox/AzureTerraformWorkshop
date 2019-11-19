@@ -1,4 +1,4 @@
-# Challenge 06 - Remote Backend
+# Challenge 07 - Remote Backend
 
 In this challenge, you will move your state file to a remote backend.
 
