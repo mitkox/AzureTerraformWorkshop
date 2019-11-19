@@ -1,4 +1,4 @@
-# Challenge 07 - Remote Backend
+# Challenge 06 - Remote Backend
 
 In this challenge, you will move your state file to a remote backend.
 
@@ -18,7 +18,7 @@ After you are done, get the account information, including SAS token.
 
 Create a Blob Container as described [here] (https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-portal#create-a-container)
 
-### Config Backend
+### Configure the Storage Account as Terraform Backend
 
 Update your configuration with the info:
 
