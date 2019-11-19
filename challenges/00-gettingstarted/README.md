@@ -1,8 +1,6 @@
 Challenge 00 - Getting Started
 =======
 
-## Expected Outcome
-
 In this challenge, you will connect to the [Azure Cloud Shell](https://azure.microsoft.com/en-us/features/cloud-shell/) that will be needed for future challenges.
 
 Cloud Shell is a free (excl. storage cost) service which provides you a virtual Linux server in a container, including pre-installed Azure CLI.

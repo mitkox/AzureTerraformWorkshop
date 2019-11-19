@@ -1,18 +1,22 @@
-# 04 - Terraform Count
+# Challenge 04 - Terraform Count
 
-## Expected Outcome
 
-In this challenge, you will take what you did in Challenge 03 and expand to take a count variable.
+In this challenge, you will take what you did in Challenge 02 and expand to take a count variable.
 
-Be aware that if you did not destroy the infrastructure from Challenge 03 you may run into resource naming conflicts (namely "Resource already exists").
+The count parameter on resources can simplify configurations and let you scale resources by simply incrementing a number.
+Additionally, variables can be used to expand a list of resources for use elsewhere.
+
+**Note:** Be aware that if you did not destroy the infrastructure from Challenge 04 you may run into resource naming conflicts (namely "Resource already exists").
 
 ## How to
 
-### Copy Terraform Configuration
+### Update Configuration to reflect the count parameter
 
-From the Cloud Shell, change directory into a folder specific to this challenge. If you created the scaffolding in Challenge 00, then then you can use the command `cd ~/AzureWorkChallenges/challenge04/`.
+From the Cloud Shell, change directory into a folder specific to this challenge. If you created the scaffolding in Challenge 00, then you can use the command `cd ~/AzureWorkChallenges/challenge04/`.
 
-Copy the `main.tf` file from challenge 03 into the current directory.
+Copy the main.tf file from challenge 03 into the current directory.
+
+Now that we have created a baseline we will update it to scale using the count parameter: 
 
 Be sure to update the value of the `name` variable:
 
@@ -128,10 +132,8 @@ Before running a plan consider the following questions:
 - What will the outputs look like?
 
 Your plan should look similar to the following
-<details><summary>View Output</summary>
-<p>
 
-```sh
+```
 $ terraform plan
 Refreshing Terraform state in-memory prior to plan...
 The refreshed state will be used to calculate this plan, but will not be
@@ -259,11 +261,11 @@ Terraform will perform the following actions:
       os_profile_windows_config.429474957.winrm.#:                        "0"
       resource_group_name:                                                "challenge04-rg"
       storage_image_reference.#:                                          "1"
-      storage_image_reference.3904372903.id:                              ""
-      storage_image_reference.3904372903.offer:                           "WindowsServer"
-      storage_image_reference.3904372903.publisher:                       "MicrosoftWindowsServer"
-      storage_image_reference.3904372903.sku:                             "2016-Datacenter"
-      storage_image_reference.3904372903.version:                         "latest"
+      storage_image_reference.3904372904.id:                              ""
+      storage_image_reference.3904372904.offer:                           "WindowsServer"
+      storage_image_reference.3904372904.publisher:                       "MicrosoftWindowsServer"
+      storage_image_reference.3904372904.sku:                             "2016-Datacenter"
+      storage_image_reference.3904372904.version:                         "latest"
       storage_os_disk.#:                                                  "1"
       storage_os_disk.0.caching:                                          "ReadWrite"
       storage_os_disk.0.create_option:                                    "FromImage"
@@ -295,11 +297,11 @@ Terraform will perform the following actions:
       os_profile_windows_config.429474957.winrm.#:                        "0"
       resource_group_name:                                                "challenge04-rg"
       storage_image_reference.#:                                          "1"
-      storage_image_reference.3904372903.id:                              ""
-      storage_image_reference.3904372903.offer:                           "WindowsServer"
-      storage_image_reference.3904372903.publisher:                       "MicrosoftWindowsServer"
-      storage_image_reference.3904372903.sku:                             "2016-Datacenter"
-      storage_image_reference.3904372903.version:                         "latest"
+      storage_image_reference.3904372904.id:                              ""
+      storage_image_reference.3904372904.offer:                           "WindowsServer"
+      storage_image_reference.3904372904.publisher:                       "MicrosoftWindowsServer"
+      storage_image_reference.3904372904.sku:                             "2016-Datacenter"
+      storage_image_reference.3904372904.version:                         "latest"
       storage_os_disk.#:                                                  "1"
       storage_os_disk.0.caching:                                          "ReadWrite"
       storage_os_disk.0.create_option:                                    "FromImage"
@@ -329,9 +331,6 @@ Note: You didn't specify an "-out" parameter to save this plan, so Terraform
 can't guarantee that exactly these actions will be performed if
 "terraform apply" is subsequently run.
 ```
-
-</p>
-</details>
 
 Run `terraform apply` to create all the infrastructure.
 

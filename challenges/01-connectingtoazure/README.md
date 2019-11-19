@@ -1,6 +1,5 @@
-# 01 - Connection To Azure
+# Challenge 01 - Connection To Azure
 
-## Expected Outcome
 
 In this challenge, you will use Terraform from the Azure Cloud Shell to create simple infrastructure in your Azure Subscription.
 

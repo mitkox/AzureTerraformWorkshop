@@ -1,7 +1,5 @@
 # Challenge 02 - Creating an Azure Virtual Machine
 
-## Expected Outcome
-
 In this challenge, you will create a Azure Virtual Machine running Windows Server.
 
 You will gradually add Terraform configuration to build all the resources needed to be able to login to the Azure Virtual Machine.
