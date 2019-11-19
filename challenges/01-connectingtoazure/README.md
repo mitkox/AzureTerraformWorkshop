@@ -59,6 +59,8 @@ resource "azurerm_resource_group" "test" {
 
 ### Run the Terraform Workflow
 
+As described before in order to deploy a resource using terraform we need to run init, plan and apply. Let's start with init: 
+
 ```
 $ terraform init
 
@@ -89,6 +91,8 @@ rerun this command to reinitialize your working directory. If you forget, other
 commands will detect it and remind you to do so if necessary.
 ```
 ---
+
+Now that we have initialize we can plan out deployment by running terraform plan: 
 
 ```
 $ terraform plan
