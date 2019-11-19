@@ -285,3 +285,8 @@ Run `terraform destroy` to remove everything we created.
 - [Azurerm Networking Moduel Source](https://github.com/Azure/terraform-azurerm-network)
 - [Azurerm Compute Module Source](https://github.com/Azure/terraform-azurerm-compute)
 - [Network Security Groups](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-nsg)
+
+What's next?
+==============
+
+Once this section is completed, go back to [the agenda](../../README.md).
