@@ -470,4 +470,4 @@ Run a `terraform destroy` and follow the prompts to remove the infrastructure.
 What's next?
 ==============
 
-Once this section is completed, go back to [the agenda](../README.md).
+Once this section is completed, go back to [the agenda](../../README.md).
