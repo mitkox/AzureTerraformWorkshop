@@ -41,36 +41,25 @@ location = "westeurope"
 
 Format the file: 
 
-`terraform fmt`
-<details><summary>View Output</summary>
-<p>
-```main.tf
-``
-</p>
-</details>
+```
+terraform fmt
+main.tf
+```
 
 Check the new format: 
 
-`cat main.tf`
-<details><summary>View Output</summary>
-<p>
-```sh
+```
+cat main.tf
 resource "azurerm_resource_group" "test" {
   name     = "challenge01-rg"
   location = "westeurope"
 }
 ```
-</p>
-</details>
 
 
 ### Run the Terraform Workflow
 
-`terraform init`
-<details><summary>View Output</summary>
-<p>
-
-```sh
+```
 $ terraform init
 
 Initializing the backend...
@@ -99,17 +88,9 @@ If you ever set or change modules or backend configuration for Terraform,
 rerun this command to reinitialize your working directory. If you forget, other
 commands will detect it and remind you to do so if necessary.
 ```
-
-</p>
-</details>
-
 ---
-`terraform plan`
 
-<details><summary>View Output</summary>
-<p>
-
-```sh
+```
 $ terraform plan
 Refreshing Terraform state in-memory prior to plan...
 The refreshed state will be used to calculate this plan, but will not be
@@ -141,17 +122,11 @@ can't guarantee that exactly these actions will be performed if
 "terraform apply" is subsequently run.
 ```
 
-</p>
-</details>
-
 Now we can actually deploy the resources by running the command below, you will need to confirm by typing "yes".
 
 ---
-`terraform apply`
-<details><summary>View Output</summary>
-<p>
-
-```sh
+```
+$ terraform apply`
 An execution plan has been generated and is shown below.
 Resource actions are indicated with the following symbols:
   + create
@@ -177,9 +152,6 @@ Do you want to perform these actions?
 azurerm_resource_group.test: Creating...
 azurerm_resource_group.test: Creation complete after 0s [id=/subscriptions/xxxx-xxxx-xxxxx/resourceGroups/challenge01-rg]
 ```
-</p>
-</details>
-
 ---
 
 Congrats, you just created your first Azure resource using Terraform!
@@ -345,12 +317,11 @@ resource "azurerm_storage_account" "main" {
 }
 
 ```
+Verify the terraform plan output, it says it will add 2 resources. 
 
-`terraform plan`
+```
+$ terraform plan
 
-Shows 2 to add
-
-```sh
 Terraform will perform the following actions:
 
   + azurerm_resource_group.main
