@@ -1,4 +1,4 @@
-00 - Getting Started
+Challenge 00 - Getting Started
 =======
 
 ## Expected Outcome
@@ -148,4 +148,4 @@ AzureWorkChallenges
 What's next?
 ==============
 
-Once this section is completed, go back to [the agenda](README.md).
+Once this section is completed, go back to [the agenda](../README.md).
