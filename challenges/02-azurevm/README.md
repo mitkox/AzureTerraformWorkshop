@@ -1,4 +1,4 @@
-# Challenge 02 - Azure Virtual Machine
+# Challenge 02 - Creating an Azure Virtual Machine
 
 ## Expected Outcome
 
