@@ -47,10 +47,10 @@ These are the challenges for the workshop, it is important to note that they hav
 * [Challenge 02 - Creating an Azure Virtual Machine](challenges/02-azurevm)
 * [Challenge 03 - Terraform Count](challenges/03-terraformcount)
 * [Challenge 04 - Terraform Modules](challenges/04-terraformmodules)
-* [Challenge 05 - Connecting to Azure](challenges/05-publicmoduleregistry)
-* [Challenge 06 - Connecting to Azure](challenges/06-remotebackend)
-* [Challenge 07 - Connecting to Azure](challenges/08-security)
-* [Challenge 08 - Connecting to Azure](challenges/09-azuredevops)
+* [Challenge 05 - Public Module Registry](challenges/05-publicmoduleregistry)
+* [Challenge 06 - Remote Backend](challenges/06-remotebackend)
+* [Challenge 07 - Security](challenges/08-security)
+* [Challenge 08 - Azure DevOps](challenges/09-azuredevops)
 
 
 ### Challenges requirements

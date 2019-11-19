@@ -1,6 +1,4 @@
-# 06 - Public Module Registry
-
-## Expected Outcome
+# Challenge 05 - Public Module Registry
 
 In this challenge, you will take a look at the public [Module Registry](https://registry.terraform.io/) and create a Virtual Machine from verified ![](../../img/2018-05-14-07-27-11.png) Public Modules.
 
@@ -22,7 +20,7 @@ If you are having issues locating the module, you can find it directly at [https
 
 ### Create Terraform Configuration
 
-From the Cloud Shell, change directory into a folder specific to this challenge. If you created the scaffolding in Challenge 00, then then you can use the command `cd ~/AzureWorkChallenges/challenge06/`.
+From the Cloud Shell, change directory into a folder specific to this challenge. If you created the scaffolding in Challenge 00, then then you can use the command `cd ~/AzureWorkChallenges/challenge05/`.
 
 To create an Azure Virtual Machine we need the networking in place, to do so we will be using both the modules above.
 The Networking module will create the Virtual Network and Subnet, then the Compute module will use that subnet as an input to create its Virtual Machine.
