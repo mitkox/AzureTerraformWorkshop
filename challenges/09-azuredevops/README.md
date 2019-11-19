@@ -137,6 +137,9 @@ resource "azurerm_virtual_network" "test" {
   location            = "${azurerm_resource_group.test.location}"
   address_space       = ["10.0.0.0/16"]
 }
+
+```
+```
     git init
     git add .
     git commit -m "Initial Commit"
