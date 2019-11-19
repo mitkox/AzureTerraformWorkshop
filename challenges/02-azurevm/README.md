@@ -232,10 +232,7 @@ Update the IP Configuration parameter of the Network Interface to attach the Pub
 
 ```hcl
 resource "azurerm_network_interface" "main" {
-  ...
-
   ip_configuration {
-    ...
     public_ip_address_id          = "${azurerm_public_ip.main.id}"
   }
 }
