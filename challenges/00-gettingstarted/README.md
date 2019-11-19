@@ -128,7 +128,7 @@ cd ~/
 Run the following in the azure cloud shell, this will simply create a folder structure for you to place your Terraform configuration:
 
 ```sh
-mkdir AzureWorkChallenges && cd AzureWorkChallenges && mkdir challenge01 && mkdir challenge02 && mkdir challenge03 && mkdir challenge04 && mkdir challenge05 && mkdir challenge06 && mkdir challenge07
+mkdir AzureWorkChallenges && cd AzureWorkChallenges && mkdir challenge01 && mkdir challenge02 && mkdir challenge03 && mkdir challenge04 && mkdir challenge05 && mkdir challenge06 && mkdir challenge07 && mkdir challenge08 && mkdir challenge09
 ```
 
 What you should end up with is a structure like this:
