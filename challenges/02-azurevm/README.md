@@ -25,7 +25,7 @@ Create a `main.tf` file with the following to pin the version of Terraform and t
 
 ```hcl
 provider "azurerm" {
-  version = "= 1.4"
+  version = "= 1.36"
 }
 
 terraform {
