@@ -43,15 +43,9 @@ terraform {
 Create a `main.tf` file with the following configuration:
 
 ```
-    resource "azurerm_virtual_network" "predayvnet" {
-      name                = "challenge06"
-      location            = var.location
-      resource_group_name = var.rg
-      address_space       = ["10.0.0.0/16"]
-      subnet {
-      name           = "default"
-      address_prefix = "10.0.1.0/24"
-  }
+resource "azurerm_resource_group" "test" {
+  name     = var.rg
+  location = var.location
 }
 ```
 Create a `variables.tf` file with the following configuration: 
@@ -105,7 +99,7 @@ Check the resources created in Azure and verify that the variables has been prop
 
 Now let's assign the value of the variables from CLI, run the following Terraform commands: 
 
-``` $ terraform apply –var 'rg=commandline' –var 'location=northeurope'` ```
+``` terraform apply -var rg='commandline' -var location='northeurope' ```
 
 Plan and apply the configuration: 
 
