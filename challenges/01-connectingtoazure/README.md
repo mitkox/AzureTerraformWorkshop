@@ -237,7 +237,7 @@ Destroy complete! Resources: 3 destroyed.
 
 ## How To - Part 2 (Import Resources)
 
-By defualt, Terraform only manages previously created resources using Terraform, and therefore they are described in onw of the templates. You can also, importe resources, meaning handle services that were created outside of Terraform for example using the portal. 
+By default, Terraform only manages previously created resources using Terraform, and therefore they are described in onw of the templates. You can also, importe resources, meaning handle services that were created outside of Terraform for example using the portal. 
 
 However, the import functionality of Terraform only writes the state file and lets Terraform know about the existance of those resources, however it will not create the Terraform configuration files. 
 
