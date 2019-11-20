@@ -70,11 +70,15 @@ Credits
 
 This workshop has been created by:
 
-* [Philippe Zenhaeusern](https://github.com/Zenocolo)- Microsoft
-* [Laura Nicolas](https://github.com/lanicola)- Microsoft
+- [Philippe Zenhaeusern](https://github.com/Zenocolo)- Microsoft
+- [Laura Nicolas](https://github.com/lanicola)- Microsoft
 
 Forked from the repo
-* [Chris Matteson](https://github.com/chrismatteson/AzureTerraformWorkshop) - Hashicorp
+- [Chris Matteson](https://github.com/chrismatteson/AzureTerraformWorkshop) - Hashicorp
+
+Other resources used: 
+- [Microsoft Repo Cloud Native Application:](https://github.com/microsoft/MCW-Cloud-native-applications)
+- [Ignite Preday Workshop:](https://github.com/Azure/Ignite2019_IaC_pre-day_docs)
 
 Additional Resources
 =======
