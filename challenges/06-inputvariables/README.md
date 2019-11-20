@@ -19,10 +19,7 @@ Terraform loads variables in the following order, with later sources taking prec
 
 ## How to
 
-## Create a Service Principal
-
-
-# Configure Vnet and Default Subnet
+## Create the configuration files and assign values to variables multiple ways
 
 We will start with a few of the basic resources needed.
 
@@ -112,5 +109,7 @@ terraform apply
 ```
 
 Check the resources created in Azure and verify that the variables has been properly assigned. 
+
+Since previous deployments were destroy we can verify the precedence on variable input and the order they take. 
 
 
