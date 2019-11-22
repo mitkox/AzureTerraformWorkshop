@@ -46,6 +46,8 @@ We will have to scale the Network Interface, Public IP, and VM resources.
 
 Each of these resources you will need make these changes:
 
+ > **Caution:** you will need to do these steps for resources that need to scale, only some of the examples are shown. 
+
 - Add the count variable
 
 ```hcl
@@ -91,7 +93,7 @@ Each of these resources you will need make these changes:
 - Update the Private IP outputs to display an array of IPs:
 
 ```hcl
-    value = "${azurerm_network_interface.module.*.private_ip_address}"
+    value = "${azurerm_network_interface.main.*.private_ip_address}"
 ```
 
 - Update the Public IP outputs to display an array of IPs:
