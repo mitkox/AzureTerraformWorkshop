@@ -501,7 +501,8 @@ Run a `terraform destroy` and follow the prompts to remove the infrastructure.
 
 ## Resources
 
-- [Terraform Count](https://www.terraform.io/docs/configuration/interpolation.html#count-information)
+- [Terraform Azure Resouce Group](https://www.terraform.io/docs/providers/azurerm/r/resource_group.html)
+- [Terraform Azure Storage Account](https://www.terraform.io/docs/providers/azurerm/r/storage_account.html)
 
 What's next?
 ==============
