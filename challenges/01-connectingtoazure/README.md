@@ -258,34 +258,39 @@ The following challenge will showcase the process to import resources into Terra
 
 ### Create Infrastructure in the Portal
 
-First, we need to create some resources outside of Terraform in order to later on import them. For that navigate to the Azure Portal and click on the "Resource groups" item on the left side and then click  "+ Add":
+First, we need to create some resources outside of Terraform in order to later on import them. For that navigate to the Azure Portal and click on the `Resource groups` item on the left side and then click  `+ Add`:
 
 ![](../../img/2018-05-28-13-58-49.png)
 
-In the Resource Group create blade give the resource group the name "myportal-rg" and click "Create":
+In the Resource Group create blade give the resource group the name `myportal-rg`, keep the location to `Central US` and click `Create`":
 
 ![](../../img/2018-05-28-14-01-30.png)
 
 Once the Resource Group is created, navigate to it.
 
-Find the "+ Add" button and click it:
+Find the `+ Add` button and click it:
 
 ![](../../img/2018-05-28-14-03-05.png)
 
-Search for "Storage Account" and click the first item and then click "Create" :
+Search for `Storage Account` and click the first item and then click `Create`:
 
 ![](../../img/2018-05-28-14-04-39.png)
 
 
 In the Storage Account create blad, fill out the following:
 
-- Name = Must be a unique name, there will be a green checkmark that shows up in the text box if your name is available. Example "<YOURUSERNAME>storageaccount"
-- Replication = LRS
-- Resource Group = Use Existing and select "myportal-rg"
+- **Name:** Must be a unique name, there will be a green checkmark that shows up in the text box if your name is available. Example "<YOURUSERNAME>storageaccount"
+- **Replication:** LRS
+- **Location:** Central US
+- **Account Type:** Storage (general purpose v1)
+- **Performance:** Standard 
+- **Resource Group:** Use Existing and select "myportal-rg"
+- **Secure transfer required:** Disabled. This parameter can be found on the Advanced->Security tab
+
 
 ![](../../img/2018-05-28-14-05-39.png)
 
-Click "Create"
+Click `Create`
 
 At this point we have a Resource Group and a Storage Account and are ready to import this into Terraform.
 
@@ -321,6 +326,36 @@ resource "azurerm_storage_account" "main" {
 
 ```
 Verify the terraform plan output, it says it will add 2 resources. 
+
+```
+$terraform init
+
+Initializing the backend...
+
+Initializing provider plugins...
+- Checking for available provider plugins...
+- Downloading plugin for provider "azurerm" (hashicorp/azurerm) 1.36.1...
+
+The following providers do not have any version constraints in configuration,
+so the latest version was installed.
+
+To prevent automatic upgrades to new major versions that may contain breaking
+changes, it is recommended to add version = "..." constraints to the
+corresponding provider blocks in configuration, with the constraint strings
+suggested below.
+
+* provider.azurerm: version = "~> 1.36"
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+```
 
 ```
 $ terraform plan
@@ -415,17 +450,19 @@ Run a `terraform plan`, you should see "No changes. Infrastructure is up-to-date
 
 Add the following tag configuration to both the Resource Group and the Storage Account:
 
+ > **CAUTION:** Do not copy and paste the entire file, add the tag section accordingly on your current configuration. 
+
 ```hcl
 resource "azurerm_resource_group" "main" {
   ...
-  tags {
+  tags = {
     terraform = "true"
   }
 }
 
 resource "azurerm_storage_account" "main" {
   ...
-  tags {
+  tags = {
     terraform = "true"
   }
 }
