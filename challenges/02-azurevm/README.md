@@ -39,7 +39,7 @@ Create a few variables that will help keep our code clean:
 
 ```hcl
 variable "name" {
-  default = "challenge03"
+  default = "challenge02"
 }
 
 variable "location" {
