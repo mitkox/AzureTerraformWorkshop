@@ -19,7 +19,7 @@ The resources you will use in this challenge:
 
 We will start with a few of the basic resources needed.
 
-From the Cloud Shell, change directory into a folder specific to this challenge. If you created the scaffolding in Challenge 00, then then you can use the command `cd ~/AzureWorkChallenges/challenge03/`.
+From the Cloud Shell, change directory into a folder specific to this challenge. If you created the scaffolding in Challenge 00, then then you can use the command `cd ~/AzureWorkChallenges/challenge02/`.
 
 Create a `main.tf` file with the following to pin the version of Terraform and the AzureRM Provider:
 
@@ -202,6 +202,8 @@ resource "azurerm_virtual_machine" "main" {
 
 Take note of the OS image:
 
+ > **CAUTION:** just take note, do not add this section again on the file.
+
 ```hcl
   storage_image_reference {
     publisher = "MicrosoftWindowsServer"
@@ -229,6 +231,8 @@ resource "azurerm_public_ip" "main" {
 ```
 
 Update the IP Configuration parameter of the Network Interface to attach the Public IP:
+
+> **CAUTION:** Update the current configuration of the network_interface to also reflect the public IP address by including that specif line to the current configuration. 
 
 ```hcl
 resource "azurerm_network_interface" "main" {
