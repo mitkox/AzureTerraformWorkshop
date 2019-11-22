@@ -1,9 +1,9 @@
-# Terraform Lab 4 - Security
+# Challenge 08 - Creating an Azure Virtual Machine with secured passwords
 
-In this section you will:
+In this section you will extend the VM created in Challenge 2 with secured passwords, therefore you will have to:
 
 - Create secret in an existing Key Vault
-- Reference secret in configuration 
+- Reference secret in your VM configuration
 
 ## Overview
 
@@ -21,13 +21,9 @@ In order to create the secret in a secure manner, you will be introduced to the 
 
 ### Setup
 
-Before digging into the configuration, lets get the environment set up by create a folder in cloudshell for your code for this part of the lab. Name it something like "lab04-part1" then create the following 4 files in this new folder:
-- providers.tf
-- main.tf
-- terraform.tfvars
-- variables.tf
+From the Cloud Shell, change directory into a folder specific to this challenge. If you created the scaffolding in Challenge 00, then then you can use the command cd ~/AzureWorkChallenges/challenge08/.
 
-By this point, these files should look familiar.
+Copy the main.tf file from challenge 02 into the current directory.
 
 ### Configuration
 
