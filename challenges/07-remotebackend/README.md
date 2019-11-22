@@ -78,10 +78,33 @@ Run `terraform init`.
 
 > **CAUTION:** This description is assuming you're either authenticating vie Azure CLI or a Service Principal, a description how to configure an Azure Backend authenticating with a Managed Service Identity (MSI) or an storage Access Key can be found here: https://www.terraform.io/docs/backends/types/azurerm.html
 
+### Validate Folder Structure locally
+
+Execute list directory command to see what files have been created during `terraform init`:
+```sh
+ls -la
+total 16
+drwxr-xr-x   5 zeno  staff  160 Nov 22 17:36 .
+drwxr-xr-x  11 zeno  staff  352 Nov 20 17:01 ..
+drwxr-xr-x   4 zeno  staff  128 Nov 22 15:20 .terraform
+-rw-r--r--   1 zeno  staff  554 Nov 22 15:19 main.tf
+-rwxrwxr-x   1 zeno  staff  599 Nov 22 17:03 storage.bash
+```
+### Run Terraform Plan and validate folder structure in Storage Account
+
+Run `terraform plan`. and validate folder structrue in the Storage Account via the Azure Portal:
+
+
+
 
 ### View Lock State
 
 Run a plan and view the file in the portal, notice how a lease is put on it.
+
+
+## Resources
+- [Terraform Azure Backend](https://www.terraform.io/docs/backends/types/azurerm.html)
+- [Microsoft Azure Backend for Terraform (https://docs.microsoft.com/en-us/azure/terraform/terraform-backend)
 
 What's next?
 ==============
