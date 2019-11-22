@@ -12,11 +12,47 @@ There are 2 types of backends:
 
 ### Create Azure Storage Account
 
-In the Portal, create a Storage Account, this storage account will act as the backend for Terraform State. You can get detailed information on how to create an Storage account [here](https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal).
+In the Cloud Shell, create a Storage Account, this storage account will act as the backend for Terraform State. You can get detailed information on how to create an Storage account over CLI [here](https://docs.microsoft.com/en-us/azure/terraform/terraform-backend).
 
-After you are done, get the account information, including SAS token.
+This is a script that will create a Storage Account with a Blob Container for you.
 
-Create a Blob Container as described [here] (https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-portal#create-a-container)
+From the Cloud Shell, change directory into a folder specific to this challenge. If you created the scaffolding in Challenge 00, then then you can use the command `cd ~/AzureWorkChallenges/challenge07/` and create a file storage.bash:
+
+```az
+#!/bin/bash
+
+RESOURCE_GROUP_NAME=tstate
+STORAGE_ACCOUNT_NAME=tstate$RANDOM
+CONTAINER_NAME=tstate
+
+# Create resource group
+az group create --name $RESOURCE_GROUP_NAME --location eastus
+
+# Create storage account
+az storage account create --resource-group $RESOURCE_GROUP_NAME --name $STORAGE_ACCOUNT_NAME --sku Standard_LRS --encryption-services blob
+
+# Create blob container
+az storage container create --name $CONTAINER_NAME --account-name $STORAGE_ACCOUNT_NAME 
+
+echo "resource_group: $RESOURCE_GROUP_NAME"
+echo "storage_account_name: $STORAGE_ACCOUNT_NAME"
+echo "container_name: $CONTAINER_NAME"
+```
+
+To execute this file you need to change permissions of it, afterwards execute it:
+```sh
+chmod 755 ./storage.bash
+./storage.bash
+```
+
+After you are done, note the outputs resource_group, storage_account_name and container_name as you will need them in the next step.
+
+```sh
+...
+resource_group: tstate
+storage_account_name: tstate23849
+container_name: tstate
+```
 
 ### Configure the Storage Account as Terraform Backend
 
@@ -24,15 +60,24 @@ Update your configuration with the info:
 
 ```hcl
 terraform {
-    backend {
-        account = ""
-        key = ""
-        name = ""
-    }
+  backend "azurerm" {
+    resource_group_name   = "tstate"
+    storage_account_name  = "tstate23849"
+    container_name        = "tstate"
+    key                   = "terraform.tfstate"
+  }
+}
+
+resource "azurerm_resource_group" "challenge07" {
+  name     = "challenge07"
+  location = "eastus"
 }
 ```
 
 Run `terraform init`.
+
+> **CAUTION:** This description is assuming you're either authenticating vie Azure CLI or a Service Principal, a description how to configure an Azure Backend authenticating with a Managed Service Identity (MSI) or an storage Access Key can be found here: https://www.terraform.io/docs/backends/types/azurerm.html
+
 
 ### View Lock State
 
