@@ -277,7 +277,7 @@ Search for `Storage Account` and click the first item and then click `Create`:
 ![](../../img/2018-05-28-14-04-39.png)
 
 
-In the Storage Account create blad, fill out the following:
+In the Storage Account create blade, fill out the following:
 
 - **Name:** Must be a unique name, there will be a green checkmark that shows up in the text box if your name is available. Example "<YOURUSERNAME>storageaccount"
 - **Replication:** LRS
