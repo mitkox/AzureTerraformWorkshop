@@ -495,7 +495,6 @@ Run a `terraform destroy` and follow the prompts to remove the infrastructure.
 
 ## Advanced areas to explore
 
-1. Play around with adjusting the `count` and `name` parameters, then running `plan` and `apply`.
 1. Run the `plan` command with the `-out` option and apply that output.
 1. Add tags to each resource.
 
@@ -503,7 +502,8 @@ Run a `terraform destroy` and follow the prompts to remove the infrastructure.
 
 - [Terraform Azure Resouce Group](https://www.terraform.io/docs/providers/azurerm/r/resource_group.html)
 - [Terraform Azure Storage Account](https://www.terraform.io/docs/providers/azurerm/r/storage_account.html)
-- [Terraform Import Command] (https://www.terraform.io/docs/import/index.html)
+- [Terraform Import Command](https://www.terraform.io/docs/import/index.html)
+- [Running Terraform in Automation](https://learn.hashicorp.com/terraform/development/running-terraform-in-automation)
 
 What's next?
 ==============
