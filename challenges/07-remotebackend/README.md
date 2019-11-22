@@ -93,7 +93,7 @@ drwxr-xr-x   4 zeno  staff  128 Nov 22 15:20 .terraform
 ### Run Terraform Plan and validate folder structure in Storage Account
 
 Run `terraform plan` and validate folder structrue in the Storage Account via the Azure Portal:
-![](../../img/StorageAccountContainer.png)
+![](../../img/StorageAccountContainer.png =500x245)
 
 
 
@@ -101,8 +101,7 @@ Run `terraform plan` and validate folder structrue in the Storage Account via th
 
 Run a `terraform apply` and while waiting for `yes` input validate the state file in the portal, notice how a lease is put on it.
 
-
-![](../../img/LockStatus.png)
+<img src="../../img/LockStatus.png" width="1000"/>
 
 ## Resources
 - [Terraform Azure Backend](https://www.terraform.io/docs/backends/types/azurerm.html)
