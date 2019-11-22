@@ -22,7 +22,7 @@ Create a file named `main.tf` and add a single Resource Group resource. You can 
 ```hcl
 resource "azurerm_resource_group" "test" {
 name     = "challenge01-rg"
-location = "westeurope"
+location = "centralus"
 }
 ```
 
@@ -34,7 +34,7 @@ Verify format:
 $ cat main.tf
 resource "azurerm_resource_group" "test" {
 name     = "challenge01-rg"
-location = "westeurope"
+location = "centralus"
 }
 ```
 
@@ -51,7 +51,7 @@ Check the new format:
 $ cat main.tf
 resource "azurerm_resource_group" "test" {
   name     = "challenge01-rg"
-  location = "westeurope"
+  location = "centralus"
 }
 ```
 
@@ -111,7 +111,7 @@ Terraform will perform the following actions:
   # azurerm_resource_group.test will be created
   + resource "azurerm_resource_group" "test" {
       + id       = (known after apply)
-      + location = "westeurope"
+      + location = "centralus"
       + name     = "challenge01-rg"
       + tags     = (known after apply)
     }
@@ -139,7 +139,7 @@ Terraform will perform the following actions:
   # azurerm_resource_group.test will be created
   + resource "azurerm_resource_group" "test" {
       + id       = (known after apply)
-      + location = "westeurope"
+      + location = "centralus"
       + name     = "challenge01-rg"
       + tags     = (known after apply)
     }
@@ -166,19 +166,6 @@ Head over to the [Azure Portal](https://portal.azure.com/)
 View all Resource Groups and you should see the recently created Resource Group.
 ![](../../img/2018-05-09-10-20-28.png)
 
-### Scale Resources
-
-Now add a new Resource Group resource that scales with a `count` parameter.
-
-```hcl
-resource "azurerm_resource_group" "count" {
-  name     = "challenge01-rg-${count.index}"
-  location = "westeurope"
-  count    = 2
-}
-```
-
-Run another `terraform plan` and `terraform apply`.
 
 ### Cleanup Resources
 
@@ -196,14 +183,11 @@ Resource actions are indicated with the following symbols:
 
 Terraform will perform the following actions:
 
-  - azurerm_resource_group.count[0]
-
-  - azurerm_resource_group.count[1]
-
+  - azurerm_resource_group.count
   - azurerm_resource_group.main
 
 
-Plan: 0 to add, 0 to change, 3 to destroy.
+Plan: 0 to add, 0 to change, 2 to destroy.
 
 Do you really want to destroy?
   Terraform will destroy all your managed infrastructure, as shown above.
@@ -230,10 +214,26 @@ azurerm_resource_group.main: Destruction complete after 47s
 azurerm_resource_group.count[0]: Destruction complete after 47s
 azurerm_resource_group.count[1]: Destruction complete after 47s
 
-Destroy complete! Resources: 3 destroyed.
+Destroy complete! Resources: 2 destroyed.
 ```
 
 ---
+
+
+#### CHEAT SHEETS
+<details>
+<summary>
+Expand for full main.tf code
+</summary>
+
+```terraform
+resource "azurerm_resource_group" "test" {
+  name     = "challenge01-rg"
+  location = "centralus"
+}
+```
+
+</details>
 
 ## How To - Part 2 (Import Resources)
 
@@ -503,6 +503,7 @@ Run a `terraform destroy` and follow the prompts to remove the infrastructure.
 
 - [Terraform Azure Resouce Group](https://www.terraform.io/docs/providers/azurerm/r/resource_group.html)
 - [Terraform Azure Storage Account](https://www.terraform.io/docs/providers/azurerm/r/storage_account.html)
+- [Terraform Import Command] (https://www.terraform.io/docs/import/index.html)
 
 What's next?
 ==============
