@@ -33,7 +33,7 @@ provider "azurerm" {
 }
 
 terraform {
-  required_version = "= 0.12.12"
+  required_version = ">= 0.12.12"
 }
 ```
 
@@ -49,12 +49,10 @@ Create a `variables.tf` file with the following configuration:
 
 ```
 variable "rg" {
-  type        = "string"
   description = "Name of resource group to provision resources to."
 }
 
 variable "location" {
-  type        = "string"
   description = "Azure region to put resources in"
 
 }
@@ -98,18 +96,48 @@ Now let's assign the value of the variables from CLI, run the following Terrafor
 
 ``` terraform apply -var rg='commandline' -var location='northeurope' ```
 
-Plan and apply the configuration: 
-
-```
-terraform plan 
-```
-Now apply: 
-```
-terraform apply 
-```
-
 Check the resources created in Azure and verify that the variables has been properly assigned. 
 
 Since previous deployments were destroy we can verify the precedence on variable input and the order they take. 
 
+### Clean up
 
+When you are done, run `terraform destroy` to remove everything we created:
+
+```sh
+terraform destroy
+azurerm_resource_group.test: Refreshing state... [id=/subscriptions/65ed073b-97bd-4fb8-a098-f1a6aaeb32f9/resourceGroups/commandline]
+
+An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # azurerm_resource_group.test will be destroyed
+  - resource "azurerm_resource_group" "test" {
+      - id       = "/subscriptions/65ed073b-97bd-4fb8-a098-f1a6aaeb32f9/resourceGroups/commandline" -> null
+      - location = "northeurope" -> null
+      - name     = "commandline" -> null
+      - tags     = {} -> null
+    }
+
+Plan: 0 to add, 0 to change, 1 to destroy.
+
+Do you really want to destroy all resources?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value:
+...
+```
+
+
+
+## Resources
+- [Variables](https://www.terraform.io/docs/configuration/variables.html)
+
+What's next?
+==============
+
+Once this section is completed, go back to [the agenda](../../README.md).
