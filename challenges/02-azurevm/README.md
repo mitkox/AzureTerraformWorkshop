@@ -21,7 +21,7 @@ We will start with a few of the basic resources needed.
 
 From the Cloud Shell, change directory into a folder specific to this challenge. If you created the scaffolding in Challenge 00, then then you can use the command `cd ~/AzureWorkChallenges/challenge02/`.
 
-Create a `main.tf` file with the following to pin the version of Terraform and the AzureRM Provider:
+Create a `provider.tf` file with the following to pin the version of Terraform and the AzureRM Provider:
 
 ```hcl
 provider "azurerm" {
@@ -29,13 +29,13 @@ provider "azurerm" {
 }
 
 terraform {
-  required_version = "= 0.12.12"
+  required_version = ">= 0.12.12"
 }
 ```
 
 ### Create Variables
 
-Create a few variables that will help keep our code clean:
+Create a `variables.tf` file  and define a few variables that will help keep our code clean:
 
 ```hcl
 variable "name" {
@@ -43,19 +43,19 @@ variable "name" {
 }
 
 variable "location" {
-  default = "eastus"
+  default = "centralus"
 }
 ```
 
 ### Create a Resource Group
 
-Now create a Resource Group to contain all of our infrastructure using the variables to interpolate the parameters. A variable is a user or machine-supplied input in Terraform configurations. Variables can be supplied via environment variables, CLI flags, or variable files. Combined with modules, variables help make Terraform flexible, sharable, and extensible. Variable must be defined before used, to do so: 
+Now create a `main.tf` file to create a Resource Group to contain all of our infrastructure using the variables to interpolate the parameters. A variable is a user or machine-supplied input in Terraform configurations. Variables can be supplied via environment variables, CLI flags, or variable files. Combined with modules, variables help make Terraform flexible, sharable, and extensible. Variable must be defined before used, to do so: 
 
 
 ```hcl
 resource "azurerm_resource_group" "main" {
   name     = "${var.name}-rg"
-  location = "${var.location}"
+  location = "var.location"
 }
 ```
 
@@ -69,14 +69,14 @@ Create a Virtual Network and Subnet using a basic CIDR block to allocate an IP b
 resource "azurerm_virtual_network" "main" {
   name                = "${var.name}-vnet"
   address_space       = ["10.0.0.0/16"]
-  location            = "${azurerm_resource_group.main.location}"
-  resource_group_name = "${azurerm_resource_group.main.name}"
+  location            =  azurerm_resource_group.main.location
+  resource_group_name =  azurerm_resource_group.main.name
 }
 
 resource "azurerm_subnet" "main" {
   name                 = "${var.name}-subnet"
-  resource_group_name  = "${azurerm_resource_group.main.name}"
-  virtual_network_name = "${azurerm_virtual_network.main.name}"
+  resource_group_name  = azurerm_resource_group.main.name
+  virtual_network_name = azurerm_virtual_network.main.name
   address_prefix       = "10.0.1.0/24"
 }
 ```
@@ -106,7 +106,7 @@ Terraform will perform the following actions:
 
   + azurerm_resource_group.main
       id:                  <computed>
-      location:            "eastus"
+      location:            "centralus"
       name:                "challenge03-rg"
       tags.%:              <computed>
 
@@ -122,7 +122,7 @@ Terraform will perform the following actions:
       id:                   <computed>
       address_space.#:      "1"
       address_space.0:      "10.0.0.0/16"
-      location:             "eastus"
+      location:             "centralus"
       name:                 "challenge03-vnet"
       resource_group_name:  "challenge03-rg"
       subnet.#:             <computed>
@@ -155,12 +155,12 @@ Create the Network Interface resource:
 ```hcl
 resource "azurerm_network_interface" "main" {
   name                = "${var.name}-nic"
-  location            = "${azurerm_resource_group.main.location}"
-  resource_group_name = "${azurerm_resource_group.main.name}"
+  location            = azurerm_resource_group.main.location
+  resource_group_name = azurerm_resource_group.main.name
 
   ip_configuration {
     name                          = "config1"
-    subnet_id                     = "${azurerm_subnet.main.id}"
+    subnet_id                     = azurerm_subnet.main.id
     private_ip_address_allocation = "dynamic"
   }
 }
@@ -171,9 +171,9 @@ Create the Virtual Machine resource:
 ```hcl
 resource "azurerm_virtual_machine" "main" {
   name                  = "${var.name}-vm"
-  location              = "${azurerm_resource_group.main.location}"
-  resource_group_name   = "${azurerm_resource_group.main.name}"
-  network_interface_ids = ["${azurerm_network_interface.main.id}"]
+  location              = azurerm_resource_group.main.location
+  resource_group_name   = azurerm_resource_group.main.name
+  network_interface_ids = [azurerm_network_interface.main.id]
   vm_size               = "Standard_A2_v2"
 
   storage_image_reference {
@@ -223,10 +223,10 @@ Create a Public IP Address that will assign an IP address:
 
 ```hcl
 resource "azurerm_public_ip" "main" {
-  name                         = "${var.name}-pubip"
-  location                     = "${azurerm_resource_group.main.location}"
-  resource_group_name          = "${azurerm_resource_group.main.name}"
-  public_ip_address_allocation = "static"
+  name                = "${var.name}-pubip"
+  location            = azurerm_resource_group.main.location
+  resource_group_name = azurerm_resource_group.main.name
+  allocation_method   = "Static"
 }
 ```
 
@@ -237,7 +237,7 @@ Update the IP Configuration parameter of the Network Interface to attach the Pub
 ```hcl
 resource "azurerm_network_interface" "main" {
   ip_configuration {
-    public_ip_address_id          = "${azurerm_public_ip.main.id}"
+    public_ip_address_id          = azurerm_public_ip.main.id
   }
 }
 ```
@@ -254,7 +254,7 @@ Running `terraform plan` should contain something like the following:
       id:                                      <computed>
       fqdn:                                    <computed>
       ip_address:                              <computed>
-      location:                                "eastus"
+      location:                                "centralus"
       name:                                    "challenge03-pubip"
       public_ip_address_allocation:            "static"
       resource_group_name:                     "challenge03-rg"
