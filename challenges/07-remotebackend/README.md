@@ -93,7 +93,8 @@ drwxr-xr-x   4 zeno  staff  128 Nov 22 15:20 .terraform
 ### Run Terraform Plan and validate folder structure in Storage Account
 
 Run `terraform plan` and validate folder structrue in the Storage Account via the Azure Portal:
-![](../../img/StorageAccountContainer.png =500x245)
+
+<img src="../../img/StorageAccountContainer.png" width="500"/>
 
 
 
