@@ -100,6 +100,8 @@ Run `terraform plan` and validate folder structrue in the Storage Account via th
 ### View Lock State
 
 Run a `terraform apply` and while waiting for `yes` input validate the state file in the portal, notice how a lease is put on it.
+
+
 ![](../../img/LockStatus.png)
 
 ## Resources
