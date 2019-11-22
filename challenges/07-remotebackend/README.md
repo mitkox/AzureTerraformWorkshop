@@ -106,7 +106,7 @@ Run a `terraform apply` and while waiting for `yes` input validate the state fil
 
 ## Resources
 - [Terraform Azure Backend](https://www.terraform.io/docs/backends/types/azurerm.html)
-- [Microsoft Azure Backend for Terraform] (https://docs.microsoft.com/en-us/azure/terraform/terraform-backend)
+- [Microsoft Azure Backend for Terraform](https://www.docs.microsoft.com/en-us/azure/terraform/terraform-backend.html)
 
 What's next?
 ==============
