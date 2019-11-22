@@ -49,12 +49,10 @@ Create a `variables.tf` file with the following configuration:
 
 ```
 variable "rg" {
-  type        = "string"
   description = "Name of resource group to provision resources to."
 }
 
 variable "location" {
-  type        = "string"
   description = "Azure region to put resources in"
 
 }
