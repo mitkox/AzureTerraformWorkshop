@@ -60,7 +60,8 @@ variable "location" {
 }
 
 variable "tenant_id" {}
-```sh
+```
+
 Now lets dig into the configuration (main.tf). 
 1. Start by reference existing Azure resources using [Terraform data sources](https://www.terraform.io/docs/configuration/data-sources.html) that are required by other resources that you will be using in your configuration as follows:
     - [Azure resource group](https://www.terraform.io/docs/providers/azurerm/d/resource_group.html): This is the Key Vault resource group, "first resource group" from Environment Details tab in the lab, It is NOT the same resource group where you will be provisioning the resources. Instead of adding the string name in here use a variable named `rg`. 
