@@ -19,6 +19,10 @@ In order to organize your code, create the following folder structure with `main
 └── modules
     └── my_virtual_machine
         └── main.tf
+        └── variables.tf
+        └── outputs.tf
+        └── provider.tf
+        
 ```
 
 ### Create the Module
@@ -27,7 +31,7 @@ Inside the `my_virtual_machine` module folder copy over the terraform configurat
 
 ### Create Variables
 
-Extract name, vm size, username and password into variables without defaults.
+Extract name, vm size, username and password into variables without defaults in the file `variables.tf`.
 
 This will result in them being required.
 
@@ -42,7 +46,7 @@ variable "password" {}
 
 Change your working directory to the `environments/dev` folder.
 
-Update main.tf to declare your module, it could look similar to this:
+Update `main.tf` to declare your module, it could look similar to this:
 
 ```hcl
 variable "username" {}
@@ -53,6 +57,14 @@ module "myawesomewindowsvm" {
   name   = "awesomeapp"
 }
 ```
+
+Create `variables.tf` to declare your variables:
+
+```hcl
+variable "username" {}
+variable "password" {}
+```
+
 
 > Notice the relative module sourcing.
 
@@ -80,8 +92,8 @@ module "myawesomewindowsvm" {
   source = "../../modules/my_virtual_machine"
   name   = "awesomeapp"
   vm_size  = "Standard_A2_v2"
-  username = "${var.username}"
-  password = "${var.password}"
+  username = "var.username"
+  password = "var.password"
 }
 ```
 
@@ -111,8 +123,8 @@ module "differentwindowsvm" {
   source = "../../modules/my_virtual_machine"
   name   = "differentapp"
   vm_size  = "Standard_A2_v2"
-  username = "${var.username}"
-  password = "${var.password}"
+  username = "var.username"
+  password = "var.password"
 }
 ```
 
@@ -157,7 +169,7 @@ Plan: 12 to add, 0 to change, 0 to destroy.
 
 In your `environments/dev/main.tf` file we can see some duplication and secrets we do not want to store in configuration.
 
-Add two variables to your environment `main.tf` file for username and password.
+Add two variables to your environment `variables.tf` file for username and password.
 
 Create a new file and name it `terraform.tfvars` that will contain our secrets and automatically loaded when we run a `plan`.
 
