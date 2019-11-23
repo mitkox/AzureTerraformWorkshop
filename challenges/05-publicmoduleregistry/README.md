@@ -34,7 +34,7 @@ module "network" {
   source              = "Azure/network/azurerm"
   version             = "2.0.0"
   resource_group_name = "myapp-networking"
-  location            = "eastus"
+  location            = "centralus"
 
   tags = {
     environment = "dev"
@@ -53,7 +53,7 @@ Terraform will perform the following actions:
 
   + module.network.azurerm_resource_group.network
       id:                   <computed>
-      location:             "eastus"
+      location:             "centralus"
       name:                 "myapp-networking"
       tags.%:               <computed>
 
@@ -69,7 +69,7 @@ Terraform will perform the following actions:
       id:                   <computed>
       address_space.#:      "1"
       address_space.0:      "10.0.0.0/16"
-      location:             "eastus"
+      location:             "centralus"
       name:                 "acctvnet"
       resource_group_name:  "myapp-networking"
       subnet.#:             <computed>
@@ -100,7 +100,7 @@ vnet_address_space = [
     10.0.0.0/16
 ]
 vnet_id = /subscriptions/.../resourceGroups/myapp-networking/providers/Microsoft.Network/virtualNetworks/acctvnet
-vnet_location = eastus
+vnet_location = centralus
 vnet_name = acctvnet
 vnet_subnets = [
     /subscriptions/.../resourceGroups/myapp-networking/providers/Microsoft.Network/virtualNetworks/acctvnet/subnets/subnet1
@@ -116,7 +116,7 @@ module "windowsservers" {
   source              = "Azure/compute/azurerm"
   version             = "1.1.5"
   resource_group_name = "myapp-compute-windows"
-  location            = "eastus"
+  location            = "centralus"
   admin_password      = "ComplxP@ssw0rd!"
   vm_os_simple        = "WindowsServer"
   nb_public_ip        = 0
@@ -144,7 +144,7 @@ Terraform will perform the following actions:
 
   + module.windowsservers.azurerm_availability_set.vm
       id:                                                               <computed>
-      location:                                                         "eastus"
+      location:                                                         "centralus"
       managed:                                                          "true"
       name:                                                             "myvm-avset"
       platform_fault_domain_count:                                      "2"
@@ -168,7 +168,7 @@ Terraform will perform the following actions:
       ip_configuration.0.private_ip_address_allocation:                 "dynamic"
       ip_configuration.0.public_ip_address_id:                          "${length(azurerm_public_ip.vm.*.id) > 0 ? element(concat(azurerm_public_ip.vm.*.id, list(\"\")), count.index) : \"\"}"
       ip_configuration.0.subnet_id:                                     "/subscriptions/27e9ff76-ce7b-4176-b2bb-4d3f40e1c999/resourceGroups/myapp-networking/providers/Microsoft.Network/virtualNetworks/acctvnet/subnets/subnet1"
-      location:                                                         "eastus"
+      location:                                                         "centralus"
       mac_address:                                                      <computed>
       name:                                                             "nic-myvm-0"
       network_security_group_id:                                        "${azurerm_network_security_group.vm.id}"
@@ -180,7 +180,7 @@ Terraform will perform the following actions:
 
   + module.windowsservers.azurerm_network_security_group.vm
       id:                                                               <computed>
-      location:                                                         "eastus"
+      location:                                                         "centralus"
       name:                                                             "myvm-3389-nsg"
       resource_group_name:                                              "myapp-compute"
       security_rule.#:                                                  "1"
@@ -201,7 +201,7 @@ Terraform will perform the following actions:
       domain_name_label:                                                "winsimplevmips"
       fqdn:                                                             <computed>
       ip_address:                                                       <computed>
-      location:                                                         "eastus"
+      location:                                                         "centralus"
       name:                                                             "myvm-0-publicIP"
       public_ip_address_allocation:                                     "dynamic"
       resource_group_name:                                              "myapp-compute"
@@ -209,7 +209,7 @@ Terraform will perform the following actions:
 
   + module.windowsservers.azurerm_resource_group.vm
       id:                                                               <computed>
-      location:                                                         "eastus"
+      location:                                                         "centralus"
       name:                                                             "myapp-compute"
       tags.%:                                                           "1"
       tags.source:                                                      "terraform"
@@ -221,7 +221,7 @@ Terraform will perform the following actions:
       boot_diagnostics.0.enabled:                                       "false"
       delete_data_disks_on_termination:                                 "false"
       delete_os_disk_on_termination:                                    "false"
-      location:                                                         "eastus"
+      location:                                                         "centralus"
       name:                                                             "myvm0"
       network_interface_ids.#:                                          <computed>
       os_profile.#:                                                     "1"
