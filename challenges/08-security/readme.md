@@ -15,7 +15,7 @@ This lab consists of two parts:
 
 ## Part 1 - Store Secret in Azure Key Vault
 
-In order to create the secret in a secure manner, you will be introduced to the concept of using multple Terraform providers in a single configuration. You will add the following providers to our configuration:
+In order to create the secret in a secure manner, you will be introduced to the concept of using multiple Terraform providers in a single configuration. You will add the following providers to our configuration:
  - [Azure Active Directory Provider](https://www.terraform.io/docs/providers/azuread/index.html)
  - [Random Provider](https://www.terraform.io/docs/providers/random/index.html)
 
@@ -34,6 +34,14 @@ variable "name" {
 ```
 
 ### Configuration
+
+Before we begin with the Terraform code we need to find out the actual Tenant ID and take note of it:
+
+
+```sh
+az account show | jq -r '.tenantId'
+72f988bf-86f1-41af-91ab-2d7cd011db47
+```
 
 Now lets dig into the configuration (main.tf). 
 1. Start by reference existing Azure resources using [Terraform data sources](https://www.terraform.io/docs/configuration/data-sources.html) that are required by other resources that you will be using in your configuration as follows:
