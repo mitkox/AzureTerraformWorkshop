@@ -63,7 +63,20 @@ variable "tenant_id" {}
 ```
 
 Now lets dig into the configuration (main.tf). 
-1. Start by reference existing Azure resources using [Terraform data sources](https://www.terraform.io/docs/configuration/data-sources.html) that are required by other resources that you will be using in your configuration as follows:
+1. Start by creating a Azure Keyvault, add the following code:
+
+    ```Terraform
+    resource "azurerm_key_vault" "main" {
+     name                        = "${var.name}-keyvault"
+     location                    = azurerm_resource_group.main.location
+     resource_group_name         = azurerm_resource_group.main.name
+     enabled_for_disk_encryption = true
+     tenant_id                   = var.tenant_id
+
+     sku_name = "standard"
+    }
+    ```
+
     - [Azure resource group](https://www.terraform.io/docs/providers/azurerm/d/resource_group.html): This is the Key Vault resource group, "first resource group" from Environment Details tab in the lab, It is NOT the same resource group where you will be provisioning the resources. Instead of adding the string name in here use a variable named `rg`. 
         > **NOTE**: We will define the value of this and other variables later in this lab.  
     - [Active Directory user](https://www.terraform.io/docs/providers/azuread/d/users.html): This data source will be used to get the Active Directory id for your lab user in order to assign the appropriate Azure Key Vault permissions. Use a variable named `labUser` for the `user_principle_name`.
