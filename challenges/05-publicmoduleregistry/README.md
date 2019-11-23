@@ -20,6 +20,8 @@ If you are having issues locating the module, you can find it directly at [https
 
 ### Create Terraform Configuration
 
+> **CAUTION:** This modules were written in Terraform 0.11 and will not work with Terraform 0.12, a possible solution is to use [tvenv](https://github.com/tfutils/tfenv) Terraform version switcher.
+
 From the Cloud Shell, change directory into a folder specific to this challenge. If you created the scaffolding in Challenge 00, then then you can use the command `cd ~/AzureWorkChallenges/challenge05/`.
 
 To create an Azure Virtual Machine we need the networking in place, to do so we will be using both the modules above.
