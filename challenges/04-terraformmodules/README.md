@@ -123,8 +123,8 @@ module "differentwindowsvm" {
   source = "../../modules/my_virtual_machine"
   name   = "differentapp"
   vm_size  = "Standard_A2_v2"
-  username = "var.username"
-  password = "var.password"
+  username = var.username
+  password = var.password
 }
 ```
 
@@ -185,13 +185,12 @@ Run `terraform plan` and verify that your plan succeeds and looks the same.
 ## Advanced areas to explore
 
 1. Use environment variables to load your secrets.
-1. Add a reference to the Public Terraform Module for [Azure Compute](https://registry.terraform.io/modules/Azure/compute/azurerm)
+
 
 ## Resources
 
 - [Using Terraform Modules](https://www.terraform.io/docs/modules/usage.html)
 - [Source Terraform Modiules](https://www.terraform.io/docs/modules/sources.html)
-- [Public Module Registry](https://www.terraform.io/docs/registry/index.html)
 
 What's next?
 ==============
