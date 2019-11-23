@@ -25,6 +25,14 @@ From the Cloud Shell, change directory into a folder specific to this challenge.
 
 Copy the all `*.tf` files from challenge 02 into the current directory.
 
+Be sure to update the value of the `name` variable in `variables.tf`:
+
+```hcl
+variable "name" {
+  default = "challenge08"
+}
+```
+
 ### Configuration
 
 Now lets dig into the configuration (main.tf). 
