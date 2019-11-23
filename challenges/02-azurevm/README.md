@@ -276,16 +276,16 @@ But wait, the Public IP was dynamically created, how do I access it?
 
 You could check the value in the Azure Portal, however let's instead add an output to get that information. An output is a configurable piece of information that is highlighted at the end of a Terraform run
 
-Add the following output:
+Add the following output into new file `outputs.tf`:
 
 ```hcl
 output "private-ip" {
-  value       = "${azurerm_network_interface.main.private_ip_address}"
+  value       = azurerm_network_interface.main.private_ip_address
   description = "Private IP Address"
 }
 
 output "public-ip" {
-  value       = "${azurerm_public_ip.main.ip_address}"
+  value       = azurerm_public_ip.main.ip_address
   description = "Public IP Address"
 }
 ```
