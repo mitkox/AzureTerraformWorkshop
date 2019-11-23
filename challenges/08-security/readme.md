@@ -23,7 +23,7 @@ In order to create the secret in a secure manner, you will be introduced to the 
 
 From the Cloud Shell, change directory into a folder specific to this challenge. If you created the scaffolding in Challenge 00, then then you can use the command cd ~/AzureWorkChallenges/challenge08/.
 
-Copy the main.tf file from challenge 02 into the current directory.
+Copy the all `*.tf` files from challenge 02 into the current directory.
 
 ### Configuration
 
