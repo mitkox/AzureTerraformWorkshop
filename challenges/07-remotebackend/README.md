@@ -56,7 +56,7 @@ container_name: tstate
 
 ### Configure the Storage Account as Terraform Backend
 
-Update your configuration with the info:
+Update your configuration `main.tf` with the info:
 
 ```hcl
 terraform {
