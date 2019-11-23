@@ -43,6 +43,24 @@ az account show | jq -r '.tenantId'
 72f988bf-86f1-41af-91ab-2d7cd011db47
 ```
 
+Now create a `terraform.tfvars` file with the tenant_id variable and initialize it in `variables.tf`:
+
+```sh
+cat terraform.tfvars
+tenant_id = "xxx"
+```
+```sh
+cat variables.tf
+variable "name" {
+  default = "challenge08"
+}
+
+variable "location" {
+  default = "centralus"
+}
+
+variable "tenant_id" {}
+```sh
 Now lets dig into the configuration (main.tf). 
 1. Start by reference existing Azure resources using [Terraform data sources](https://www.terraform.io/docs/configuration/data-sources.html) that are required by other resources that you will be using in your configuration as follows:
     - [Azure resource group](https://www.terraform.io/docs/providers/azurerm/d/resource_group.html): This is the Key Vault resource group, "first resource group" from Environment Details tab in the lab, It is NOT the same resource group where you will be provisioning the resources. Instead of adding the string name in here use a variable named `rg`. 
