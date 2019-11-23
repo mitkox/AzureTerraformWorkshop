@@ -18,7 +18,7 @@ Copy the main.tf file from challenge 02 into the current directory.
 
 Now that we have created a baseline we will update it to scale using the count parameter: 
 
-Be sure to update the value of the `name` variable:
+Be sure to update the value of the `name` variable in `variables.tf`:
 
 ```hcl
 variable "name" {
@@ -44,14 +44,14 @@ The Resource Group, Virtual Network and Subnet will not change.
 
 We will have to scale the Network Interface, Public IP, and VM resources.
 
-Each of these resources you will need make these changes:
+Each of these resources you will need make these changes in `main.tf`:
 
  > **Caution:** you will need to do these steps for resources that need to scale, only some of the examples are shown. 
 
 - Add the count variable
 
 ```hcl
-    count = "${var.vmcount}"
+    count = "var.vmcount"
 ```
 
 - Update the resource name to include the count index, for example the VM resource:
@@ -127,7 +127,7 @@ Now investigate this plan in more detail and you will notice that names have bee
 
 ### Update Count
 
-Set the default value of the count to `2`.
+Set the default value of the count to `2` in `variables.tf`.
 Before running a plan consider the following questions:
 
 - How many resources do expect the plan to show?
@@ -169,7 +169,7 @@ Terraform will perform the following actions:
       ip_configuration.0.private_ip_address_allocation:                   "dynamic"
       ip_configuration.0.public_ip_address_id:                            "${element(azurerm_public_ip.main.*.id, count.index)}"
       ip_configuration.0.subnet_id:                                       "${azurerm_subnet.main.id}"
-      location:                                                           "eastus"
+      location:                                                           "centralus"
       mac_address:                                                        <computed>
       name:                                                               "challenge03-nic0"
       private_ip_address:                                                 <computed>
@@ -197,7 +197,7 @@ Terraform will perform the following actions:
       ip_configuration.0.private_ip_address_allocation:                   "dynamic"
       ip_configuration.0.public_ip_address_id:                            "${element(azurerm_public_ip.main.*.id, count.index)}"
       ip_configuration.0.subnet_id:                                       "${azurerm_subnet.main.id}"
-      location:                                                           "eastus"
+      location:                                                           "centralus"
       mac_address:                                                        <computed>
       name:                                                               "challenge03-nic1"
       private_ip_address:                                                 <computed>
@@ -210,7 +210,7 @@ Terraform will perform the following actions:
       id:                                                                 <computed>
       fqdn:                                                               <computed>
       ip_address:                                                         <computed>
-      location:                                                           "eastus"
+      location:                                                           "centralus"
       name:                                                               "challenge03-pubip0"
       public_ip_address_allocation:                                       "static"
       resource_group_name:                                                "challenge03-rg"
@@ -221,7 +221,7 @@ Terraform will perform the following actions:
       id:                                                                 <computed>
       fqdn:                                                               <computed>
       ip_address:                                                         <computed>
-      location:                                                           "eastus"
+      location:                                                           "centralus"
       name:                                                               "challenge03-pubip1"
       public_ip_address_allocation:                                       "static"
       resource_group_name:                                                "challenge03-rg"
@@ -230,7 +230,7 @@ Terraform will perform the following actions:
 
   + azurerm_resource_group.main
       id:                                                                 <computed>
-      location:                                                           "eastus"
+      location:                                                           "centralus"
       name:                                                               "challenge03-rg"
       tags.%:                                                             <computed>
 
@@ -248,7 +248,7 @@ Terraform will perform the following actions:
       delete_data_disks_on_termination:                                   "false"
       delete_os_disk_on_termination:                                      "false"
       identity.#:                                                         <computed>
-      location:                                                           "eastus"
+      location:                                                           "centralus"
       name:                                                               "challenge03-vm0"
       network_interface_ids.#:                                            <computed>
       os_profile.#:                                                       "1"
@@ -284,7 +284,7 @@ Terraform will perform the following actions:
       delete_data_disks_on_termination:                                   "false"
       delete_os_disk_on_termination:                                      "false"
       identity.#:                                                         <computed>
-      location:                                                           "eastus"
+      location:                                                           "centralus"
       name:                                                               "challenge03-vm1"
       network_interface_ids.#:                                            <computed>
       os_profile.#:                                                       "1"
@@ -318,7 +318,7 @@ Terraform will perform the following actions:
       id:                                                                 <computed>
       address_space.#:                                                    "1"
       address_space.0:                                                    "10.0.0.0/16"
-      location:                                                           "eastus"
+      location:                                                           "centralus"
       name:                                                               "challenge03-vnet"
       resource_group_name:                                                "challenge03-rg"
       subnet.#:                                                           <computed>
