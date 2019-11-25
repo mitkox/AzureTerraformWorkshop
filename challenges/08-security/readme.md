@@ -110,6 +110,7 @@ with:
 ```Terraform
     admin_password = azurerm_key_vault_secret.main.value
 }
+```
 
 #### CHEAT SHEET
 <details>
