@@ -16,7 +16,6 @@ This lab consists of two parts:
 ## Part 1 - Store Secret in Azure Key Vault
 
 In order to create the secret in a secure manner, you will be introduced to the concept of using multiple Terraform providers in a single configuration. You will add the following providers to our configuration:
- - [Azure Active Directory Provider](https://www.terraform.io/docs/providers/azuread/index.html)
  - [Random Provider](https://www.terraform.io/docs/providers/random/index.html)
 
 ### Setup
@@ -35,47 +34,54 @@ variable "name" {
 
 ### Configuration
 
-Before we begin with the Terraform code we need to find out the actual Tenant ID and take note of it:
+In order to reference logged in user credentiasl in terraform we need to introduce a data provider in your `main.tf` file: 
 
-
-```sh
-az account show | jq -r '.tenantId'
-72f988bf-86f1-41af-91ab-2d7cd011db47
+```Terraform
+data "azurerm_client_config" "current" {}
 ```
 
-Now create a `terraform.tfvars` file with the tenant_id variable and initialize it in `variables.tf`:
+Now create a random provider in `main.tf` to generate a random password used in key_vault later:
 
-```sh
-cat terraform.tfvars
-tenant_id = "xxx"
+```Terraform
+resource "random_password" "admin_pwd" {
+  length  = 24
+  special = true
+}
 ```
-```sh
-cat variables.tf
-variable "name" {
-  default = "challenge08"
+
+Last but not least, we need to create a Azure Key Vault and assign a secret to it. Manipulating secrets in Azure Key Vault require an access policy which we will create with the credentials collected from the data provider defined above. Add following code to your 
+`main.tf` file:
+
+```Terraform
+resource "azurerm_key_vault" "main" {
+  name                            = "${var.name}-kv"
+  location                        = azurerm_resource_group.main.location
+  resource_group_name             = azurerm_resource_group.main.name
+  enabled_for_disk_encryption     = true
+  enabled_for_deployment          = true
+  enabled_for_template_deployment = true
+  tenant_id                       = data.azurerm_client_config.current.tenant_id
+  sku_name                        = "standard"
+
+  access_policy {
+    tenant_id = data.azurerm_client_config.current.tenant_id
+    object_id = data.azurerm_client_config.current.service_principal_object_id
+
+    secret_permissions = [
+      "list", "get", "delete", "set", "backup", "purge", "recover", "restore",
+    ]
+  }
+  tags = {
+    environment = var.name
+  }
 }
 
-variable "location" {
-  default = "centralus"
+resource "azurerm_key_vault_secret" "main" {
+  name         = "vm-secret"
+  value        = random_password.admin_pwd.result
+  key_vault_id = azurerm_key_vault.main.id
 }
-
-variable "tenant_id" {}
 ```
-
-Now lets dig into the configuration (main.tf). 
-1. Start by creating a Azure Keyvault, add the following code:
-
-    ```Terraform
-    resource "azurerm_key_vault" "main" {
-     name                        = "${var.name}-keyvault"
-     location                    = azurerm_resource_group.main.location
-     resource_group_name         = azurerm_resource_group.main.name
-     enabled_for_disk_encryption = true
-     tenant_id                   = var.tenant_id
-
-     sku_name = "standard"
-    }
-    ```
 
     - [Azure resource group](https://www.terraform.io/docs/providers/azurerm/d/resource_group.html): This is the Key Vault resource group, "first resource group" from Environment Details tab in the lab, It is NOT the same resource group where you will be provisioning the resources. Instead of adding the string name in here use a variable named `rg`. 
         > **NOTE**: We will define the value of this and other variables later in this lab.  
