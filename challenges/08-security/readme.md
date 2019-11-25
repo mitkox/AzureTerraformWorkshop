@@ -9,9 +9,7 @@ In this section you will extend the VM created in Challenge 2 with secured passw
 
 In any real world Infrastructure as Code project, you will have secrets such as tokens, passwords, connection strings, certificates, encryption keys, etc. that are required in order to provision the desired resources. Although these are required by the code, you should NOT include the actual secret in the code. There are a number of ways to reference secrets from code of varying ease of use and security. In this lab, we will be using a central store, [Azure Key Vault](https://azure.microsoft.com/en-us/services/key-vault/?&ef_id=EAIaIQobChMIocnT3-Cj5QIVbx6tBh16xwXkEAAYASAAEgI-jfD_BwE:G:s&OCID=AID2000128_SEM_IMHcwqu6&MarinID=IMHcwqu6_359393301283_azure%20key%20vault_e_c__73271632300_kwd-415940116485&lnkd=Google_Azure_Brand&gclid=EAIaIQobChMIocnT3-Cj5QIVbx6tBh16xwXkEAAYASAAEgI-jfD_BwE), to store, manage and reference your secrets.
 
-This lab consists of two parts: 
-- In part 1, you will create a secret that will be stored in Azure Key Vault. Although you will be performing and authenticating both of these actions as a single lab user, in the real world, the secrets could and typically would be created and stored by a separate user who would grant the end user or process permission to a given secret. 
-- In part 2, you will reference and use the secret stored in Azure Key Vault in your configuration. Referencing secrets in this manner will ensure that the secret is not exposed in code but also allows the secret to be changed / rotated without changing your code. 
+This lab you will create an Azure Key Vault, create a ransom password and store it as a secret. In a second step you will create a VM that is referencing this password.
 
 ## Part 1 - Store Secret in Azure Key Vault
 
@@ -69,8 +67,7 @@ resource "random_password" "admin_pwd" {
 
     > **NOTE**: You are using the `random_password` instead of the `random_string` resource to ensure that the generated password is not output in clear text to logs, etc. It will still be stored in the state file which is why it is critical to properly secure your terraform state. 
 
-Last but not least, we need to create a Azure Key Vault and assign a secret to it. Manipulating secrets in Azure Key Vault require an access policy which we will create with the credentials collected from the data provider defined above. Add following code to your 
-`main.tf` file:
+In the next step we need to create a Azure Key Vault and assign a secret to it. Manipulating secrets in Azure Key Vault require an access policy which we will create with the credentials collected from the data provider defined above. Add following code to your `main.tf` file:
 
 ```Terraform
 resource "azurerm_key_vault" "main" {
@@ -102,6 +99,17 @@ resource "azurerm_key_vault_secret" "main" {
   key_vault_id = azurerm_key_vault.main.id
 }
 ```
+
+Last but not least, we need to reference the Azure Key Vault Secret in our VM creation code, please replace the following line in your `main.tf` file:
+
+```Terraform
+    admin_password = "Password1234!"
+}
+```
+with:
+```Terraform
+    admin_password = azurerm_key_vault_secret.main.value
+}
 
 #### CHEAT SHEET
 <details>
