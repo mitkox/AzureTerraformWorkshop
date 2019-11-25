@@ -50,7 +50,7 @@ These are the challenges for the workshop, it is important to note that they hav
 * [Challenge 05 - Public Module Registry](challenges/05-publicmoduleregistry)
 * [Challenge 06 - Input Variables](challenges/06-inputvariables)
 * [Challenge 07 - Remote Backend](challenges/07-remotebackend)
-* [Challenge 08 - Security](challenges/08-security)
+* [Challenge 08 - Azure Secrets](challenges/08-security)
 * [Challenge 09 - Azure DevOps](challenges/09-azuredevops) **Optional**
 
 
