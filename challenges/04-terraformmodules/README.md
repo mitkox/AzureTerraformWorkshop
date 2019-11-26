@@ -165,8 +165,6 @@ Plan: 12 to add, 0 to change, 0 to destroy.
 
 In your `environments/dev/main.tf` file we can see some duplication and secrets we do not want to store in configuration.
 
-Add two variables to your environment `variables.tf` file for username and password.
-
 Create a new file and name it `terraform.tfvars` that will contain our secrets and automatically loaded when we run a `plan`.
 
 ```hcl
