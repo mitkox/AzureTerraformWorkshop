@@ -14,7 +14,7 @@ Additionally, variables can be used to expand a list of resources for use elsewh
 
 From the Cloud Shell, change directory into a folder specific to this challenge. If you created the scaffolding in Challenge 00, then you can use the command `cd ~/AzureWorkChallenges/challenge03/`.
 
-Copy the main.tf file from challenge 02 into the current directory.
+Copy the all *.tf files from challenge 02 into the current directory.
 
 Now that we have created a baseline we will update it to scale using the count parameter: 
 
