@@ -11,7 +11,7 @@ In any real world Infrastructure as Code project, you will have secrets such as 
 
 This lab you will create an Azure Key Vault, create a ransom password and store it as a secret. In a second step you will create a VM that is referencing this password.
 
-## Part 1 - Store Secret in Azure Key Vault
+## Store Secret in Azure Key Vault
 
 In order to create the secret in a secure manner, you will be introduced to the concept of using multiple Terraform providers in a single configuration. You will add the following providers to our configuration:
  - [Random Provider](https://www.terraform.io/docs/providers/random/index.html)
