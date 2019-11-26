@@ -31,12 +31,11 @@ Inside the `my_virtual_machine` module folder copy over the terraform configurat
 
 ### Create Variables
 
-Extract name, vm size, username and password into variables without defaults in the file `variables.tf`.
+Extract vm size, username and password into variables without defaults in the file `variables.tf`, adjust also the variable name to "challenge04".
 
 This will result in them being required.
 
 ```hcl
-variable "name" {}
 variable "vm_size" {}
 variable "username" {}
 variable "password" {}
