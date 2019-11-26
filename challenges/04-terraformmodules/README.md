@@ -48,9 +48,6 @@ Change your working directory to the `environments/dev` folder.
 Update `main.tf` to declare your module, it could look similar to this:
 
 ```hcl
-variable "username" {}
-variable "password" {}
-
 module "myawesomewindowsvm" {
   source = "../../modules/my_virtual_machine"
   name   = "awesomeapp"
