@@ -51,7 +51,7 @@ Each of these resources you will need make these changes in `main.tf`:
 - Add the count variable
 
 ```hcl
-    count = "var.vmcount"
+    count = var.vmcount
 ```
 
 - Update the resource name to include the count index, for example the VM resource:
@@ -81,13 +81,13 @@ Each of these resources you will need make these changes in `main.tf`:
 - Update the ID reference for the Virtual Machine:
 
 ```hcl
-    network_interface_ids = ["${element(azurerm_network_interface.main.*.id, count.index)}"]
+    network_interface_ids = [{element(azurerm_network_interface.main.*.id, count.index)]
 ```
 
 - Update the Public IP ID reference for the Network Interface:
 
 ```hcl
-    public_ip_address_id = "${element(azurerm_public_ip.main.*.id, count.index)}"
+    public_ip_address_id = element(azurerm_public_ip.main.*.id, count.index)
 ```
 
 - Update the Private IP outputs to display an array of IPs:
