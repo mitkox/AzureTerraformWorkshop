@@ -88,3 +88,4 @@ Additional Resources can be found at:
 - Terraform Azure Provider: https://www.terraform.io/docs/providers/azurerm
 - Terraform Version Switcher: https://github.com/kamatama41/tfenv 
 - Azure DevOps: https://docs.microsoft.com/en-us/azure/devops/index?view=azure-devops&viewFallbackFrom=vsts 
+- Blog Julien Corioland: https://blog.jcorioland.io/categories/#Terraform
