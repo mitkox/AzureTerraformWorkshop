@@ -81,7 +81,7 @@ Each of these resources you will need make these changes in `main.tf`:
 - Update the ID reference for the Virtual Machine:
 
 ```hcl
-    network_interface_ids = [{element(azurerm_network_interface.main.*.id, count.index)]
+    network_interface_ids = [element(azurerm_network_interface.main.*.id, count.index)]
 ```
 
 - Update the Public IP ID reference for the Network Interface:
