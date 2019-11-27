@@ -55,7 +55,7 @@ Now create a `main.tf` file to create a Resource Group to contain all of our inf
 ```hcl
 resource "azurerm_resource_group" "main" {
   name     = "${var.name}-rg"
-  location = "var.location"
+  location = var.location
 }
 ```
 
