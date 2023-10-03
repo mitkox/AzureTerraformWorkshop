@@ -230,7 +230,7 @@ Destroy complete! Resources: 2 destroyed.
 <summary>
 Expand for full provider.tf:
 </summary>
-```
+```terraform
 terraform {
   required_version = ">= 1.3.0"
   required_providers {
@@ -246,7 +246,7 @@ provider "azurerm" {
 }
 ```
 and main.tf code:
-```
+```terraform
 resource "azurerm_resource_group" "test" {
   name     = "challenge01-rg"
   location = "centralus"
