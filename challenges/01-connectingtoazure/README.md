@@ -17,7 +17,25 @@ In this challenge, you will:
 
 From the Cloud Shell, change directory into a folder specific to this challenge. If you created the scaffolding in Challenge 00, then then you can use the command `cd ~/AzureWorkChallenges/challenge01/`.
 
-Create a file named `main.tf` and add a single Resource Group resource. You can use the command **code** to open a text editor on cloudshell.
+Create a `provider.tf` file with the following to pin the version of Terraform and the AzureRM Provider:
+
+```hcl
+terraform {
+  required_version = ">= 1.3.0"
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "3.75.0"
+    }
+  }
+}
+
+provider "azurerm" {
+  features {}
+}
+```
+
+Create another file named `main.tf` and add a single Resource Group resource. You can use the command **code** to open a text editor on cloudshell.
 
 ```hcl
 resource "azurerm_resource_group" "test" {
@@ -26,7 +44,7 @@ location = "centralus"
 }
 ```
 
-Save the file an exit. This will create a simple Resource Group and allow you to walk through the Terraform Workflow however you can see the format is not properly set as you would on a JSON file, you could edit it your self or run the command **terraform fmt**.
+Save the filees an exit. This will create a simple Resource Group and allow you to walk through the Terraform Workflow however you can see the format is not properly set as you would on a JSON file, you could edit it your self or run the command **terraform fmt**.
 
 Verify format: 
 
@@ -54,47 +72,25 @@ resource "azurerm_resource_group" "test" {
   location = "centralus"
 }
 ```
-Create a `provider.tf` file with the following to pin the version of Terraform and the AzureRM Provider:
-
-```hcl
-terraform {
-  required_version = ">= 1.3.0"
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "3.75.0"
-    }
-  }
-}
-
-provider "azurerm" {
-  features {}
-}
-```
-
 
 ### Run the Terraform Workflow
 
 As described before in order to deploy a resource using terraform we need to run init, plan and apply. Let's start with init: 
 
 ```
-$ terraform init
+challenge01~  terraform init
 
 Initializing the backend...
 
 Initializing provider plugins...
-- Checking for available provider plugins...
-- Downloading plugin for provider "azurerm" (hashicorp/azurerm) 1.36.1...
+- Finding hashicorp/azurerm versions matching "3.75.0"...
+- Installing hashicorp/azurerm v3.75.0...
+- Installed hashicorp/azurerm v3.75.0 (signed by HashiCorp)
 
-The following providers do not have any version constraints in configuration,
-so the latest version was installed.
-
-To prevent automatic upgrades to new major versions that may contain breaking
-changes, it is recommended to add version = "..." constraints to the
-corresponding provider blocks in configuration, with the constraint strings
-suggested below.
-
-* provider.azurerm: version = "~> 1.36"
+Terraform has created a lock file .terraform.lock.hcl to record the provider
+selections it made above. Include this file in your version control repository
+so that Terraform can guarantee to make the same selections by default when
+you run "terraform init" in the future.
 
 Terraform has been successfully initialized!
 
@@ -104,23 +100,16 @@ should now work.
 
 If you ever set or change modules or backend configuration for Terraform,
 rerun this command to reinitialize your working directory. If you forget, other
-commands will detect it and remind you to do so if necessary.
+commands will detect it and remind you to do so if necessary..
 ```
 ---
 
 Now that we have initialize we can plan out deployment by running terraform plan: 
 
 ```
-$ terraform plan
-Refreshing Terraform state in-memory prior to plan...
-The refreshed state will be used to calculate this plan, but will not be
-persisted to local or remote state storage.
+challenge01~  terraform plan
 
-
-------------------------------------------------------------------------
-
-An execution plan has been generated and is shown below.
-Resource actions are indicated with the following symbols:
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
   + create
 
 Terraform will perform the following actions:
@@ -130,7 +119,6 @@ Terraform will perform the following actions:
       + id       = (known after apply)
       + location = "centralus"
       + name     = "challenge01-rg"
-      + tags     = (known after apply)
     }
 
 Plan: 1 to add, 0 to change, 0 to destroy.
