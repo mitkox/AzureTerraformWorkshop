@@ -54,6 +54,18 @@ resource "azurerm_resource_group" "test" {
   location = "centralus"
 }
 ```
+Create a `provider.tf` file with the following to pin the version of Terraform and the AzureRM Provider:
+
+```hcl
+provider "azurerm" {
+  version  = "= 3.75.0"
+  features = {} 
+}
+
+terraform {
+  required_version = ">= 1.3.0"
+}
+```
 
 
 ### Run the Terraform Workflow
