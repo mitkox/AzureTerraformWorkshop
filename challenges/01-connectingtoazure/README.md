@@ -228,13 +228,28 @@ Destroy complete! Resources: 2 destroyed.
 #### CHEAT SHEETS
 <details>
 <summary>
-Expand for full main.tf code
+Expand for full provider.tf and main.tf code
 </summary>
 
 ```terraform
 resource "azurerm_resource_group" "test" {
   name     = "challenge01-rg"
   location = "centralus"
+}
+```
+```terraform
+terraform {
+  required_version = ">= 1.3.0"
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "3.75.0"
+    }
+  }
+}
+
+provider "azurerm" {
+  features {}
 }
 ```
 
