@@ -229,8 +229,6 @@ Destroy complete! Resources: 2 destroyed.
 ## Resources
 
 - [Terraform Azure Resouce Group](https://www.terraform.io/docs/providers/azurerm/r/resource_group.html)
-- [Terraform Azure Storage Account](https://www.terraform.io/docs/providers/azurerm/r/storage_account.html)
-- [Terraform Import Command](https://www.terraform.io/docs/import/index.html)
 - [Running Terraform in Automation](https://learn.hashicorp.com/terraform/development/running-terraform-in-automation)
 
 What's next?
