@@ -228,16 +228,9 @@ Destroy complete! Resources: 2 destroyed.
 #### CHEAT SHEETS
 <details>
 <summary>
-Expand for full provider.tf and main.tf code
+Expand for full provider.tf:
 </summary>
-
-```terraform
-resource "azurerm_resource_group" "test" {
-  name     = "challenge01-rg"
-  location = "centralus"
-}
 ```
-```terraform
 terraform {
   required_version = ">= 1.3.0"
   required_providers {
@@ -252,7 +245,13 @@ provider "azurerm" {
   features {}
 }
 ```
-
+and main.tf code:
+```
+resource "azurerm_resource_group" "test" {
+  name     = "challenge01-rg"
+  location = "centralus"
+}
+```
 </details>
 
 ## How To - Part 2 (Import Resources)
