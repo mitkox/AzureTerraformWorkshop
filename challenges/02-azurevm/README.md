@@ -1,17 +1,13 @@
-# Challenge 02 - Creating an Azure Virtual Machine
+# Challenge 02 - Creating an AKS Cluster and a Storage account
+In this challenge, you will create a AKS cluster and a Storage Account.
 
-In this challenge, you will create a Azure Virtual Machine running Windows Server.
-
-You will gradually add Terraform configuration to build all the resources needed to be able to login to the Azure Virtual Machine.
+You will gradually add Terraform configuration to build all the resources needed to deploy the resources.
 
 The resources you will use in this challenge:
 
 - Resource Group
-- Virtual Network
-- Subnet
-- Network Interface
-- Virtual Machine
-- Public IP Address
+- Azure Kubernetes Cluster
+- Storage Account
 
 ## How to
 
@@ -24,12 +20,18 @@ From the Cloud Shell, change directory into a folder specific to this challenge.
 Create a `provider.tf` file with the following to pin the version of Terraform and the AzureRM Provider:
 
 ```hcl
-provider "azurerm" {
-  version = "= 1.36"
+terraform {
+  required_version = ">= 1.3.0"
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "3.75.0"
+    }
+  }
 }
 
-terraform {
-  required_version = ">= 0.12.12"
+provider "azurerm" {
+  features {}
 }
 ```
 
@@ -53,31 +55,36 @@ Now create a `main.tf` file to create a Resource Group to contain all of our inf
 
 
 ```hcl
-resource "azurerm_resource_group" "main" {
+resource "azurerm_resource_group" "rg" {
   name     = "${var.name}-rg"
   location = var.location
 }
 ```
 
-### Create Virtual Networking
+### Create AKS Cluster
 
-In order to create an Azure Virtual Machine we need to create a network in which to place it.
-
-Create a Virtual Network and Subnet using a basic CIDR block to allocate an IP block:
+Create a basic Azure Kubernetes Cluster:
 
 ```hcl
-resource "azurerm_virtual_network" "main" {
-  name                = "${var.name}-vnet"
-  address_space       = ["10.0.0.0/16"]
-  location            =  azurerm_resource_group.main.location
-  resource_group_name =  azurerm_resource_group.main.name
-}
+resource "azurerm_kubernetes_cluster" "aks" {
+  name                = "papcp-aks1"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  dns_prefix          = "dnsname"
 
-resource "azurerm_subnet" "main" {
-  name                 = "${var.name}-subnet"
-  resource_group_name  = azurerm_resource_group.main.name
-  virtual_network_name = azurerm_virtual_network.main.name
-  address_prefix       = "10.0.1.0/24"
+  default_node_pool {
+    name       = "default"
+    node_count = 1
+    vm_size    = "Standard_D2_v2"
+  }
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  tags = {
+    Environment = "Production"
+  }
 }
 ```
 
@@ -89,180 +96,237 @@ Run `terraform init` since this is the first time we are running Terraform from 
 
 Run `terraform plan` where you should see the plan of two new resources, namely the Resource Group and the Virtual Network.
 
-```sh
-$ terraform plan
-Refreshing Terraform state in-memory prior to plan...
-The refreshed state will be used to calculate this plan, but will not be
-persisted to local or remote state storage.
-
-
-------------------------------------------------------------------------
-
-An execution plan has been generated and is shown below.
-Resource actions are indicated with the following symbols:
-  + create
-
-Terraform will perform the following actions:
-
-  + azurerm_resource_group.main
-      id:                  <computed>
-      location:            "centralus"
-      name:                "challenge03-rg"
-      tags.%:              <computed>
-
-  + azurerm_subnet.main
-      id:                   <computed>
-      address_prefix:       "10.0.1.0/24"
-      ip_configurations.#:  <computed>
-      name:                 "challenge03-subnet"
-      resource_group_name:  "challenge03-rg"
-      virtual_network_name: "challenge03-vnet"
-
-  + azurerm_virtual_network.main
-      id:                   <computed>
-      address_space.#:      "1"
-      address_space.0:      "10.0.0.0/16"
-      location:             "centralus"
-      name:                 "challenge03-vnet"
-      resource_group_name:  "challenge03-rg"
-      subnet.#:             <computed>
-      tags.%:               <computed>
-
-
-Plan: 3 to add, 0 to change, 0 to destroy.
-
-------------------------------------------------------------------------
-
-Note: You didn't specify an "-out" parameter to save this plan, so Terraform
-can't guarantee that exactly these actions will be performed if
-"terraform apply" is subsequently run.
-```
-
 If your plan looks good, go ahead and run `terraform apply` and type "yes" to confirm you want to apply.
 When it completes you should see:
 
 ```sh
-Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 ```
 
-### Create the Azure Virtual Machine
+### Create the Storage Account
 
-Now that we have base networking in place, we will add a Network Interface and Virtual Machine.
-We will create a VM with an Azure Marketplace Image for Windows Server 2016 Datacenter.
+Storage Account needs to be unique within Azure, often companies use their own naming conventions, in this example we will create a
+random name that meets the naming restrictions for Storage Account name:
 
-Create the Network Interface resource:
+Create random name:
 
 ```hcl
-resource "azurerm_network_interface" "main" {
-  name                = "${var.name}-nic"
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
-
-  ip_configuration {
-    name                          = "config1"
-    subnet_id                     = azurerm_subnet.main.id
-    private_ip_address_allocation = "dynamic"
-  }
+resource "random_string" "storage-name" {
+  length  = 12
+  upper   = false
+  numeric  = false
+  lower   = true
+  special = false
 }
 ```
 
-Create the Virtual Machine resource:
+Create the Storage Account resource (with the random name generated in previous step):
 
 ```hcl
-resource "azurerm_virtual_machine" "main" {
-  name                  = "${var.name}-vm"
-  location              = azurerm_resource_group.main.location
-  resource_group_name   = azurerm_resource_group.main.name
-  network_interface_ids = [azurerm_network_interface.main.id]
-  vm_size               = "Standard_A2_v2"
+resource "azurerm_storage_account" "storageacount" {
+  name                     = "${random_string.storage-name.result}sta"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = azurerm_resource_group.rg.location
+  account_tier             = "Standard"
+  account_replication_type = "GRS"
 
-  storage_image_reference {
-    publisher = "MicrosoftWindowsServer"
-    offer     = "WindowsServer"
-    sku       = "2016-Datacenter"
-    version   = "latest"
-  }
-
-  storage_os_disk {
-    name              = "${var.name}vm-osdisk"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
-  }
-
-  os_profile {
-    computer_name  = "${var.name}vm"
-    admin_username = "testadmin"
-    admin_password = "Password1234!"
-  }
-
-  os_profile_windows_config {}
-}
-```
-
-Take note of the OS image:
-
- > **CAUTION:** just take note, do not add this section again on the file.
-
-```hcl
-  storage_image_reference {
-    publisher = "MicrosoftWindowsServer"
-    offer     = "WindowsServer"
-    sku       = "2016-Datacenter"
-    version   = "latest"
-  }
-```
-
-Run a plan and apply to create both these resources.
-
-### Add a Public IP
-
-At this point you should have a running Virtual Machine in Azure running Windows Server, however you have no way to access it. To do this we must do two things, create the Public IP Resource and configure the Network Interface to use it.
-
-Create a Public IP Address that will assign an IP address:
-
-```hcl
-resource "azurerm_public_ip" "main" {
-  name                = "${var.name}-pubip"
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
-  allocation_method   = "Static"
-}
-```
-
-Update the IP Configuration parameter of the Network Interface to attach the Public IP:
-
-> **CAUTION:** Update the current configuration of the network_interface to also reflect the public IP address by including that specif line to the current configuration. 
-
-```hcl
-resource "azurerm_network_interface" "main" {
-  ip_configuration {
-    public_ip_address_id          = azurerm_public_ip.main.id
+  tags = {
+    environment = "staging"
   }
 }
 ```
-
 ### Terraform Plan
 
 Running `terraform plan` should contain something like the following:
 
 ```sh
-  ~ azurerm_network_interface.main
-      ip_configuration.0.public_ip_address_id: "" => "${azurerm_public_ip.main.id}"
+challenge02~  tf plan
+azurerm_resource_group.rg: Refreshing state... [id=/subscriptions/65ed073b-97bd-4fb8-a098-f1a6aaeb32f9/resourceGroups/challenge02-rg]
+azurerm_kubernetes_cluster.aks: Refreshing state... [id=/subscriptions/65ed073b-97bd-4fb8-a098-f1a6aaeb32f9/resourceGroups/challenge02-rg/providers/Microsoft.ContainerService/managedClusters/papcp-aks1]
 
-  + azurerm_public_ip.main
-      id:                                      <computed>
-      fqdn:                                    <computed>
-      ip_address:                              <computed>
-      location:                                "centralus"
-      name:                                    "challenge03-pubip"
-      public_ip_address_allocation:            "static"
-      resource_group_name:                     "challenge03-rg"
-      sku:                                     "Basic"
-      tags.%:                                  <computed>
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
 
+Terraform will perform the following actions:
 
-Plan: 1 to add, 1 to change, 0 to destroy.
+  # azurerm_storage_account.storageacount will be created
+  + resource "azurerm_storage_account" "storageacount" {
+      + access_tier                       = (known after apply)
+      + account_kind                      = "StorageV2"
+      + account_replication_type          = "GRS"
+      + account_tier                      = "Standard"
+      + allow_nested_items_to_be_public   = true
+      + cross_tenant_replication_enabled  = true
+      + default_to_oauth_authentication   = false
+      + enable_https_traffic_only         = true
+      + id                                = (known after apply)
+      + infrastructure_encryption_enabled = false
+      + is_hns_enabled                    = false
+      + large_file_share_enabled          = (known after apply)
+      + location                          = "centralus"
+      + min_tls_version                   = "TLS1_2"
+      + name                              = (known after apply)
+      + nfsv3_enabled                     = false
+      + primary_access_key                = (sensitive value)
+      + primary_blob_connection_string    = (sensitive value)
+      + primary_blob_endpoint             = (known after apply)
+      + primary_blob_host                 = (known after apply)
+      + primary_connection_string         = (sensitive value)
+      + primary_dfs_endpoint              = (known after apply)
+      + primary_dfs_host                  = (known after apply)
+      + primary_file_endpoint             = (known after apply)
+      + primary_file_host                 = (known after apply)
+      + primary_location                  = (known after apply)
+      + primary_queue_endpoint            = (known after apply)
+      + primary_queue_host                = (known after apply)
+      + primary_table_endpoint            = (known after apply)
+      + primary_table_host                = (known after apply)
+      + primary_web_endpoint              = (known after apply)
+      + primary_web_host                  = (known after apply)
+      + public_network_access_enabled     = true
+      + queue_encryption_key_type         = "Service"
+      + resource_group_name               = "challenge02-rg"
+      + secondary_access_key              = (sensitive value)
+      + secondary_blob_connection_string  = (sensitive value)
+      + secondary_blob_endpoint           = (known after apply)
+      + secondary_blob_host               = (known after apply)
+      + secondary_connection_string       = (sensitive value)
+      + secondary_dfs_endpoint            = (known after apply)
+      + secondary_dfs_host                = (known after apply)
+      + secondary_file_endpoint           = (known after apply)
+      + secondary_file_host               = (known after apply)
+      + secondary_location                = (known after apply)
+      + secondary_queue_endpoint          = (known after apply)
+      + secondary_queue_host              = (known after apply)
+      + secondary_table_endpoint          = (known after apply)
+      + secondary_table_host              = (known after apply)
+      + secondary_web_endpoint            = (known after apply)
+      + secondary_web_host                = (known after apply)
+      + sftp_enabled                      = false
+      + shared_access_key_enabled         = true
+      + table_encryption_key_type         = "Service"
+      + tags                              = {
+          + "environment" = "staging"
+        }
+
+      + blob_properties {
+          + change_feed_enabled           = (known after apply)
+          + change_feed_retention_in_days = (known after apply)
+          + default_service_version       = (known after apply)
+          + last_access_time_enabled      = (known after apply)
+          + versioning_enabled            = (known after apply)
+
+          + container_delete_retention_policy {
+              + days = (known after apply)
+            }
+
+          + cors_rule {
+              + allowed_headers    = (known after apply)
+              + allowed_methods    = (known after apply)
+              + allowed_origins    = (known after apply)
+              + exposed_headers    = (known after apply)
+              + max_age_in_seconds = (known after apply)
+            }
+
+          + delete_retention_policy {
+              + days = (known after apply)
+            }
+
+          + restore_policy {
+              + days = (known after apply)
+            }
+        }
+
+      + network_rules {
+          + bypass                     = (known after apply)
+          + default_action             = (known after apply)
+          + ip_rules                   = (known after apply)
+          + virtual_network_subnet_ids = (known after apply)
+
+          + private_link_access {
+              + endpoint_resource_id = (known after apply)
+              + endpoint_tenant_id   = (known after apply)
+            }
+        }
+
+      + queue_properties {
+          + cors_rule {
+              + allowed_headers    = (known after apply)
+              + allowed_methods    = (known after apply)
+              + allowed_origins    = (known after apply)
+              + exposed_headers    = (known after apply)
+              + max_age_in_seconds = (known after apply)
+            }
+
+          + hour_metrics {
+              + enabled               = (known after apply)
+              + include_apis          = (known after apply)
+              + retention_policy_days = (known after apply)
+              + version               = (known after apply)
+            }
+
+          + logging {
+              + delete                = (known after apply)
+              + read                  = (known after apply)
+              + retention_policy_days = (known after apply)
+              + version               = (known after apply)
+              + write                 = (known after apply)
+            }
+
+          + minute_metrics {
+              + enabled               = (known after apply)
+              + include_apis          = (known after apply)
+              + retention_policy_days = (known after apply)
+              + version               = (known after apply)
+            }
+        }
+
+      + routing {
+          + choice                      = (known after apply)
+          + publish_internet_endpoints  = (known after apply)
+          + publish_microsoft_endpoints = (known after apply)
+        }
+
+      + share_properties {
+          + cors_rule {
+              + allowed_headers    = (known after apply)
+              + allowed_methods    = (known after apply)
+              + allowed_origins    = (known after apply)
+              + exposed_headers    = (known after apply)
+              + max_age_in_seconds = (known after apply)
+            }
+
+          + retention_policy {
+              + days = (known after apply)
+            }
+
+          + smb {
+              + authentication_types            = (known after apply)
+              + channel_encryption_type         = (known after apply)
+              + kerberos_ticket_encryption_type = (known after apply)
+              + multichannel_enabled            = (known after apply)
+              + versions                        = (known after apply)
+            }
+        }
+    }
+
+  # random_string.storage-name will be created
+  + resource "random_string" "storage-name" {
+      + id          = (known after apply)
+      + length      = 12
+      + lower       = true
+      + min_lower   = 0
+      + min_numeric = 0
+      + min_special = 0
+      + min_upper   = 0
+      + number      = false
+      + numeric     = false
+      + result      = (known after apply)
+      + special     = false
+      + upper       = false
+    }
+
+Plan: 2 to add, 0 to change, 0 to destroy.
 ```
 
 > Notice that there is a new resource being added and one being updated.
@@ -271,51 +335,42 @@ Run `terraform apply` to apply the changes.
 
 ### Outputs
 
-You now have all the infrastructure in place and can now Remote Desktop into the Windows Server VM we just stood up.
-But wait, the Public IP was dynamically created, how do I access it?
+You now have all the infrastructure in place and can now connect to the AKS Clyster we just stood up.
+But wait, we require a Client Certificate and Kube Config to access it?
 
 You could check the value in the Azure Portal, however let's instead add an output to get that information. An output is a configurable piece of information that is highlighted at the end of a Terraform run
 
 Add the following output into new file `outputs.tf`:
 
 ```hcl
-output "private-ip" {
-  value       = azurerm_network_interface.main.private_ip_address
-  description = "Private IP Address"
+output "client_certificate" {
+  value     = azurerm_kubernetes_cluster.aks.kube_config.0.client_certificate
+  sensitive = true
 }
 
-output "public-ip" {
-  value       = azurerm_public_ip.main.ip_address
-  description = "Public IP Address"
+output "kube_config" {
+  value = azurerm_kubernetes_cluster.aks.kube_config_raw
+
+  sensitive = true
 }
 ```
 
 Now run a `terraform refresh`, which will refresh your state file with the real-world infrastructure and resolve the new outputs you just created.
 
 ```sh
-$ terraform refresh
-azurerm_resource_group.main: Refreshing state... (ID: /subscriptions/.../resourceGroups/challenge03-rg)
-azurerm_virtual_network.main: Refreshing state... (ID: /subscriptions/.../virtualNetworks/challenge03-vnet)
-azurerm_public_ip.main: Refreshing state... (ID: /subscriptions/.../publicIPAddresses/challenge03-pubip)
-azurerm_subnet.main: Refreshing state... (ID: /subscriptions/.../subnets/challenge03-subnet)
-azurerm_network_interface.main: Refreshing state... (ID: /subscriptions/.../networkInterfaces/challenge03-nic)
-azurerm_virtual_machine.main: Refreshing state... (ID: /subscriptions/.../virtualMachines/challenge03-vm)
+challenge02~  terraform refresh
+random_string.storage-name: Refreshing state... [id=fojsdjwpkpim]
+azurerm_resource_group.rg: Refreshing state... [id=/subscriptions/65ed073b-97bd-4fb8-a098-f1a6aaeb32f9/resourceGroups/challenge02-rg]
+azurerm_storage_account.storageacount: Refreshing state... [id=/subscriptions/65ed073b-97bd-4fb8-a098-f1a6aaeb32f9/resourceGroups/challenge02-rg/providers/Microsoft.Storage/storageAccounts/fojsdjwpkpimsta]
+azurerm_kubernetes_cluster.aks: Refreshing state... [id=/subscriptions/65ed073b-97bd-4fb8-a098-f1a6aaeb32f9/resourceGroups/challenge02-rg/providers/Microsoft.ContainerService/managedClusters/papcp-aks1]
 
 Outputs:
 
-private-ip = 10.0.1.4
-public-ip = 168.61.55.117
+client_certificate = <sensitive>
+kube_config = <sensitive>
 ```
 
 > Note: you can also run `terraform output` to see just these outputs without having to run refresh again.
-
-### Remote Desktop (optional)
-
-Using the Public IP output value, Remote Desktop into the Virtual Machine to verify connectivity.
-
-![](../../img/2018-05-09-14-55-42.png)
-
-Success! You have now stood up a Virtual Machine in Azure using Terraform!
 
 ### Clean up
 
@@ -323,55 +378,15 @@ When you are done, run `terraform destroy` to remove everything we created:
 
 ```sh
 terraform destroy
-azurerm_resource_group.main: Refreshing state... (ID: /subscriptions/.../resourceGroups/challenge03-rg)
-azurerm_public_ip.main: Refreshing state... (ID: /subscriptions/.../publicIPAddresses/challenge03-pubip)
-azurerm_virtual_network.main: Refreshing state... (ID: /subscriptions/.../virtualNetworks/challenge03-vnet)
-azurerm_subnet.main: Refreshing state... (ID: /subscriptions/.../subnets/challenge03-subnet)
-azurerm_network_interface.main: Refreshing state... (ID: /subscriptions/.../networkInterfaces/challenge03-nic)
-azurerm_virtual_machine.main: Refreshing state... (ID: /subscriptions/.../virtualMachines/challenge03-vm)
-
-An execution plan has been generated and is shown below.
-Resource actions are indicated with the following symbols:
-  - destroy
-
-Terraform will perform the following actions:
-
-  - azurerm_network_interface.main
-
-  - azurerm_public_ip.main
-
-  - azurerm_resource_group.main
-
-  - azurerm_subnet.main
-
-  - azurerm_virtual_machine.main
-
-  - azurerm_virtual_network.main
-
-
-Plan: 0 to add, 0 to change, 6 to destroy.
-
-Do you really want to destroy?
-  Terraform will destroy all your managed infrastructure, as shown above.
-  There is no undo. Only 'yes' will be accepted to confirm.
-...
 ```
-
-## Advanced areas to explore
-
-1. Extract secrets into required variables.
-1. Add a data disk.
-1. Add a DNS Label to the Public IP Address.
-1. Search for Marketplace Images. (hint: use the Azurel CLI and start with `az vm image -h`)
 
 ## Resources
 
-- [Azure Resource Group](https://www.terraform.io/docs/providers/azurerm/r/resource_group.html)
-- [Azure Virtual Network](https://www.terraform.io/docs/providers/azurerm/r/virtual_network.html)
-- [Azure Subnet](https://www.terraform.io/docs/providers/azurerm/r/subnet.html)
-- [Azure Network Interface](https://www.terraform.io/docs/providers/azurerm/r/network_interface.html)
-- [Azure Virtual Machine](https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html)
-- [Public IP Address](https://www.terraform.io/docs/providers/azurerm/r/public_ip.html)
+- [Azure Resource Group](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group.html)
+- [Azure Kubernetes Cluster](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster)
+- [Azure Storage Account](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account)
+- [Terraform Random Provider](https://registry.terraform.io/providers/hashicorp/random/latest/docs)
+
 
 What's next?
 ==============
