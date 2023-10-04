@@ -77,7 +77,7 @@ resource "azurerm_resource_group" "test" {
 
 As described before in order to deploy a resource using terraform we need to run init, plan and apply. Let's start with init: 
 
-```
+```sh
 challenge01~  terraform init
 
 Initializing the backend...
@@ -133,7 +133,7 @@ can't guarantee that exactly these actions will be performed if
 Now we can actually deploy the resources by running the command below, you will need to confirm by typing "yes".
 
 ---
-```
+```sh
 $ terraform apply
 An execution plan has been generated and is shown below.
 Resource actions are indicated with the following symbols:
