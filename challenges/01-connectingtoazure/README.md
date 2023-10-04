@@ -38,7 +38,7 @@ provider "azurerm" {
 Create another file named `main.tf` and add a single Resource Group resource. You can use the command **code** to open a text editor on cloudshell.
 
 ```hcl
-resource "azurerm_resource_group" "test" {
+resource "azurerm_resource_group" "rg" {
 name     = "challenge01-rg"
 location = "centralus"
 }
