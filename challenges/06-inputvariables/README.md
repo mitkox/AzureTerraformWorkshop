@@ -70,8 +70,11 @@ First we will assigne values by using environment variables:
 export TF_VAR_rg=environmentvariables
 export TF_VAR_location=westeurope
 ```
-Plan and apply the configuration: 
-
+Init, Plan and apply the configuration: 
+```
+terraform init 
+```
+Now plan:
 ```
 terraform plan 
 ```
