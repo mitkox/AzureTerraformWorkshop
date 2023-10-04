@@ -63,28 +63,7 @@ resource "azurerm_resource_group" "rg" {
 
 ### Create AKS Cluster
 
-In a first step lets create an Azure Container Registry which will be later assigned to the Azure Kubernetes Cluster.
-Azure Container Regisrty requires unique name, therefore we will create upfront a Random String.
-
-```hcl
-resource "random_string" "rstring" {
-  length  = 12
-  upper   = false
-  numeric  = false
-  lower   = true
-  special = false
-}
-
-resource "azurerm_container_registry" "acr" {
-  name                = "acr${random_string.rstring.result}"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  sku                 = "Premium"
-}
-```
-
-
-Now add the Azure Kubernetes Cluster.
+Create a basic Azure Kubernetes Cluster:
 
 ```hcl
 resource "azurerm_kubernetes_cluster" "aks" {
@@ -106,17 +85,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
   tags = {
     Environment = "Production"
   }
-}
-```
-
-In last step we can make the assignment.
-
-```hcl
-resource "azurerm_role_assignment" "roleassignment" {
-  principal_id                     = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
-  role_definition_name             = "AcrPull"
-  scope                            = azurerm_container_registry.acr.id
-  skip_service_principal_aad_check = true
 }
 ```
 
