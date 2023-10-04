@@ -28,12 +28,18 @@ From the Cloud Shell, change directory into a folder specific to this challenge.
 Create a `provider.tf` file with the following configuration:
 
 ```hcl
-provider "azurerm" {
-  version = "= 1.36"
+terraform {
+  required_version = ">= 1.3.0"
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "3.75.0"
+    }
+  }
 }
 
-terraform {
-  required_version = ">= 0.12.12"
+provider "azurerm" {
+  features {}
 }
 ```
 

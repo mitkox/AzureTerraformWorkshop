@@ -44,7 +44,7 @@ These are the challenges for the workshop, it is important to note that they hav
 
 * [Challenge 00 - Getting Started](challenges/00-gettingstarted)
 * [Challenge 01 - Connecting to Azure](challenges/01-connectingtoazure)
-* [Challenge 02 - Creating an Azure Virtual Machine](challenges/02-azurevm)
+* [Challenge 02 - Creating an Azure Virtual Machine](challenges/02-aks)
 * [Challenge 03 - Terraform Count](challenges/03-terraformcount)
 * [Challenge 04 - Terraform Modules](challenges/04-terraformmodules)
 * [Challenge 05 - Public Module Registry](challenges/05-publicmoduleregistry)
