@@ -8,7 +8,7 @@ This Workshop is focused on:
 
 - Understanding Infrastructure as Code concepts
 - Terraform as an Infrastructure as Code provider for Azure
-- Integrating Terraform on Azure DevOps tooling.
+- Integrating Terraform on Azure DevOps tooling. --> ACE
 
 Attendees will learn basics of Infrastructure as Code  and gain skills on deploying and managing Azure resources using Terraform.
 
