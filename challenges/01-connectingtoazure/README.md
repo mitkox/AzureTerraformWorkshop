@@ -134,7 +134,7 @@ Now we can actually deploy the resources by running the command below, you will 
 
 ---
 ```
-$ terraform apply`
+$ terraform apply
 An execution plan has been generated and is shown below.
 Resource actions are indicated with the following symbols:
   + create
