@@ -64,10 +64,19 @@ resource "azurerm_resource_group" "rg" {
 ### Create AKS Cluster
 
 In a first step lets create an Azure Container Registry which will be later assigned to the Azure Kubernetes Cluster.
+Azure Container Regisrty requires unique name, therefore we will create upfront a Random String.
 
 ```hcl
+resource "random_string" "rstring" {
+  length  = 12
+  upper   = false
+  numeric  = false
+  lower   = true
+  special = false
+}
+
 resource "azurerm_container_registry" "acr" {
-  name                = "containerRegistry1"
+  name                = "acr${random_string.rstring.result}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   sku                 = "Premium"
