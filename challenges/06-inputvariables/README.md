@@ -45,7 +45,7 @@ provider "azurerm" {
 
 Create a `main.tf` file with the following configuration:
 
-```
+```hcl
 resource "azurerm_resource_group" "test" {
   name     = var.rg
   location = var.location
@@ -53,7 +53,7 @@ resource "azurerm_resource_group" "test" {
 ```
 Create a `variables.tf` file with the following configuration: 
 
-```
+```hcl
 variable "rg" {
   description = "Name of resource group to provision resources to."
 }
@@ -66,7 +66,7 @@ variable "location" {
 
 First we will assigne values by using environment variables: 
 
-```
+```hcl
 export TF_VAR_rg=environmentvariables
 export TF_VAR_location=westeurope
 ```
