@@ -1,2 +1,3 @@
-variable "username" {}
-variable "password" {}
+variable "environment" {
+    default = "dev"
+}

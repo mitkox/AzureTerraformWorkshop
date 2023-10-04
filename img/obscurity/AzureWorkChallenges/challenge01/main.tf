@@ -1,4 +1,4 @@
-resource "azurerm_resource_group" "test" {
+resource "azurerm_resource_group" "rg" {
   name     = "challenge01-rg"
   location = "centralus"
 }

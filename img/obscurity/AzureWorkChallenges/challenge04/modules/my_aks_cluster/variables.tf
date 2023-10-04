@@ -6,10 +6,11 @@ variable "location" {
   default = "centralus"
 }
 
-variable "vmcount" {
-  default = 2
+variable "clustercount" {
+  default = 1
 }
 
+variable "aks_name" {}
+variable "node_count" {}
 variable "vm_size" {}
-variable "username" {}
-variable "password" {}
+variable "environment" {}

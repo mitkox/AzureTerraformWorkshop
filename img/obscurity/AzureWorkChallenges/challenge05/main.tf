@@ -1,21 +1,13 @@
-module "network" {
-  source              = "Azure/network/azurerm"
-  version             = "2.0.0"
-  resource_group_name = "myapp-networking"
-  location            = "centralus"
-
-  tags = {
-    environment = "dev"
-  }
+resource "azurerm_resource_group" "rg" {
+  name     = "challenge05-rg"
+  location = "centralus"
 }
 
-module "windowsservers" {
-  source              = "Azure/compute/azurerm"
-  version             = "1.1.5"
-  resource_group_name = "myapp-compute-windows"
-  location            = "centralus"
-  admin_password      = "ComplxP@ssw0rd!"
-  vm_os_simple        = "WindowsServer"
-  nb_public_ip        = 0
-  vnet_subnet_id      = "${module.network.vnet_subnets[0]}"
+module "aks" {
+  source              = "Azure/aks/azurerm"
+  resource_group_name = "challenge05-rg"
+  cluster_log_analytics_workspace_name = "sjhdsajhdkjsahdjksahkdjhsajkd"
+  prefix = "pcp"
+  role_based_access_control_enabled = true
+  depends_on = [ azurerm_resource_group.rg ]
 }

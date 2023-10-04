@@ -1,9 +1,9 @@
-output "private-ip" {
-  value       = azurerm_network_interface.main.private_ip_address
-  description = "Private IP Address"
+output "client_certificate" {
+  value     = azurerm_kubernetes_cluster.aks.kube_config.0.client_certificate
+  sensitive = true
 }
 
-output "public-ip" {
-  value       = azurerm_public_ip.main.ip_address
-  description = "Public IP Address"
+output "kube_config" {
+  value = azurerm_kubernetes_cluster.aks.kube_config_raw
+  sensitive = true
 }

@@ -6,6 +6,6 @@ variable "location" {
   default = "centralus"
 }
 
-variable "vmcount" {
+variable "clustercount" {
   default = 2
 }

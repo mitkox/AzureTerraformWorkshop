@@ -4,15 +4,16 @@ resource "azurerm_resource_group" "rg" {
 }
 
 resource "azurerm_kubernetes_cluster" "aks" {
-  name                = "papcp-aks1"
+  name                = "var.aks_name${count.index}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   dns_prefix          = "dnsname"
+  count               = var.clustercount
 
   default_node_pool {
     name       = "default"
-    node_count = 1
-    vm_size    = "Standard_D2_v2"
+    node_count = var.node_count
+    vm_size    = var.vm_size
   }
 
   identity {
@@ -33,11 +34,12 @@ resource "random_string" "storage-name" {
 }
 
 resource "azurerm_storage_account" "storageacount" {
-  name                     = "${random_string.storage-name.result}sta"
+  name                     = "${random_string.storage-name.result}sta${count.index}"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   account_tier             = "Standard"
   account_replication_type = "GRS"
+  count                    = var.clustercount
 
   tags = {
     environment = "staging"
