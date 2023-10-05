@@ -51,7 +51,7 @@ Each of these resources you will need make these changes in `main.tf`:
 - Add the count variable for AKS and Storage Account resource:
 
 ```hcl
-    count = var.clusteracount
+    count = var.clustercount
 ```
 
 - Update the resource name for the AKS cluster to include the count index:
